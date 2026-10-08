@@ -23,7 +23,7 @@ NewYearShow::NewYearShow(Canvas *canvas, CountdownClock *clock)
       clock(clock),
       calm(canvas, 4, 5, 30),
       frantic(canvas, 7, 8, 10),
-      fireworks(canvas, nullptr) {
+      fireworks(canvas) {
     frantic.addPalette(RedGreenWhitePalette);
     frantic.addPalette(RetroC9Palette);
     frantic.addPalette(FairyLightPalette);
@@ -146,10 +146,11 @@ void NewYearShow::drawFinalTen(double s) {
 
 void NewYearShow::drawCelebration(double s) {
     float since = -s;
-    canvas->clear();
     //
-    // The fireworks were written for 60 frames a second, and we run at 30.
-    fireworks.step();
+    // The fireworks fade the canvas a little each step rather than clearing
+    // it, which leaves trails behind the sparks, and lets the year and the
+    // midnight flash fade out gently too. They open with a barrage.
+    fireworks.setFinale(since < finaleSeconds);
     fireworks.step();
 
     if (since < yearSeconds) {

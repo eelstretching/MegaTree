@@ -5,7 +5,7 @@
 
 #include "Animation.h"
 #include "CountdownClock.h"
-#include "Fireworks.h"
+#include "Fireworks2D.h"
 #include "TwinkleFox.h"
 
 /// @brief The New Year's Eve show, driven by how long it is until midnight.
@@ -38,7 +38,7 @@ class NewYearShow : public Animation {
 
     TwinkleFox calm;
     TwinkleFox frantic;
-    Fireworks fireworks;
+    Fireworks2D fireworks;
 
     Phase phase = WAITING;
 
@@ -47,6 +47,9 @@ class NewYearShow : public Animation {
 
     /// @brief How long the new year shows over the fireworks, in seconds.
     float yearSeconds = 60;
+
+    /// @brief How long the opening barrage of fireworks lasts, in seconds.
+    float finaleSeconds = 20;
 
     /// @brief Turns off the pixels whose seconds have run out, and makes the
     /// one going out this second glow.

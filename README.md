@@ -85,5 +85,5 @@ The time comes from the board's DS3231 RTC, which keeps UTC. Set
 
 Status light 0 is green when the show knows the time and red when it doesn't.
 
-It needs PicoLEDs with `TwinkleFox` and the Fireworks fixes
+It needs PicoLEDs with `TwinkleFox` and `Fireworks2D`
 (eelstretching/PicoLEDs#2).
