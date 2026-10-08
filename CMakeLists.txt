@@ -57,6 +57,9 @@ set_target_properties(PicoLEDs PROPERTIES
 # The board's status lights driver, from the universal-strip-controller firmware.
 add_subdirectory(${USC_FIRMWARE_PATH}/drivers/status_lights ${CMAKE_BINARY_DIR}/status_lights)
 
+# Leaping arches: the Arch and Archimation classes.
+add_subdirectory(arches)
+
 # Add executable. Default name is the project name, version 0.1
 
 add_executable(MegaTree MegaTree.cpp)
@@ -81,3 +84,15 @@ target_include_directories(MegaTree PRIVATE
 )
 
 pico_add_extra_outputs(MegaTree)
+
+# A demo of the leaping arch Archimations on a single output.
+add_executable(LeapingArches LeapingArches.cpp)
+pico_set_program_name(LeapingArches "LeapingArches")
+pico_set_program_version(LeapingArches "0.1")
+pico_enable_stdio_uart(LeapingArches 1)
+pico_enable_stdio_usb(LeapingArches 1)
+target_link_libraries(LeapingArches
+    Arches
+    pico_stdlib
+)
+pico_add_extra_outputs(LeapingArches)
