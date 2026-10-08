@@ -38,3 +38,22 @@ void Arch::rotate(Direction direction) {
         strip->rotateLeft(start, start + numPixels);
     }
 }
+
+void Arch::shift(Direction direction, const RGB& color) {
+    rotate(direction);
+    bool away = direction == RIGHT || direction == UP;
+    set(away ? 0 : numPixels - 1, color);
+}
+
+void Arch::shiftFromApex(const RGB& color) {
+    //
+    // Each leg runs from a foot to the apex. With an odd number of pixels the
+    // apex pixel belongs to both legs.
+    int legLength = (numPixels + 1) / 2;
+    int last = numPixels - 1;
+    for (int i = 0; i < legLength - 1; i++) {
+        set(i, get(i + 1));
+        set(last - i, get(last - i - 1));
+    }
+    setMirrored(legLength - 1, color);
+}

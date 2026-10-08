@@ -4,6 +4,7 @@
 #include "ArchRise.h"
 #include "ArchSet.h"
 #include "ArrayColorMap.h"
+#include "FillWipe.h"
 #include "Leap.h"
 #include "Strip.h"
 #include "pico/stdio.h"
@@ -58,6 +59,18 @@ int main() {
     ArchRise riseTogether(&arches, &xmasColors, 2, rgColors, true, 45);
     riseTogether.setName("RiseTogether");
     animator.addTimed(&riseTogether, 15000);
+
+    FillWipe wipeLeft(&arches, &xmasColors, 5, rgbwgColors, WIPE_LEFT);
+    wipeLeft.setName("WipeLeft");
+    animator.addTimed(&wipeLeft, 20000);
+
+    FillWipe wipeRight(&arches, &xmasColors, 2, rgColors, WIPE_RIGHT, 8);
+    wipeRight.setName("WipeRight");
+    animator.addTimed(&wipeRight, 20000);
+
+    FillWipe wipeMiddle(&arches, &xmasColors, 5, rgbwgColors, WIPE_MIDDLE, 1);
+    wipeMiddle.setName("WipeMiddle");
+    animator.addTimed(&wipeMiddle, 20000);
 
     animator.init();
 

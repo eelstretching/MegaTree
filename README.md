@@ -44,9 +44,11 @@ path at configure time if they live elsewhere.
   `init()` and `step()`. `MultiArchimation` and `TimedArchimation` match
   their PicoLEDs namesakes, and `ArchAnimator` runs a list of them like
   `Animator`/`RandomAnimator` (`setShuffle(true)` for random order).
-- Two starter Archimations: `Leap` (a ball with a fading tail runs up and
-  over each arch in turn) and `ArchRise` (arches fill from both feet to the
-  apex, one by one or all together).
+- Starter Archimations: `Leap` (a ball with a fading tail runs up and
+  over each arch in turn), `ArchRise` (arches fill from both feet to the
+  apex, one by one or all together) and `FillWipe` (arches fill from the feet
+  with a set of colors, then black shifts in from the left foot, the right
+  foot or the apex to clear them).
 
 The `LeapingArches` program runs them on three 80-pixel arches on GPIO10.
 

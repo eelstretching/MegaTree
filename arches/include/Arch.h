@@ -78,6 +78,16 @@ class Arch {
     /// @brief Rotates the arch's pixels by one. RIGHT and UP move pixels away
     /// from pixel 0; LEFT and DOWN move them towards it.
     void rotate(Direction direction);
+
+    /// @brief Shifts the arch's pixels by one, like rotate(), but the pixel
+    /// shifted off the end is dropped and a new color comes in at the other
+    /// end. RIGHT brings color in at pixel 0; LEFT brings it in at the far
+    /// foot.
+    void shift(Direction direction, const RGB& color);
+
+    /// @brief Shifts both legs down by one, away from the apex and towards
+    /// the feet, bringing the given color in at the apex.
+    void shiftFromApex(const RGB& color);
 };
 
 #endif
