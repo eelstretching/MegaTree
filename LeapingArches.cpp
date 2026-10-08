@@ -4,6 +4,7 @@
 #include "ArchRise.h"
 #include "ArchSet.h"
 #include "ArrayColorMap.h"
+#include "Cylon.h"
 #include "FillWipe.h"
 #include "Leap.h"
 #include "Strip.h"
@@ -71,6 +72,14 @@ int main() {
     FillWipe wipeMiddle(&arches, &xmasColors, 5, rgbwgColors, WIPE_MIDDLE, 1);
     wipeMiddle.setName("WipeMiddle");
     animator.addTimed(&wipeMiddle, 20000);
+
+    Cylon cylon(&arches);
+    cylon.setName("Cylon");
+    animator.addTimed(&cylon, 20000);
+
+    Cylon cylons(&arches, RGB::Red, 4, 2, 160, true);
+    cylons.setName("Cylons");
+    animator.addTimed(&cylons, 20000);
 
     animator.init();
 
