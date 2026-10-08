@@ -57,8 +57,19 @@ set_target_properties(PicoLEDs PROPERTIES
 # The board's status lights driver, from the universal-strip-controller firmware.
 add_subdirectory(${USC_FIRMWARE_PATH}/drivers/status_lights ${CMAKE_BINARY_DIR}/status_lights)
 
+# The DS3231 driver uses the SDK's datetime_t, which is only built in on the
+# RP2040 unless we ask for it (the universal-strip-controller firmware does
+# the same).
+add_compile_definitions(PICO_INCLUDE_RTC_DATETIME=1)
+
+# The board's DS3231 RTC driver, from the universal-strip-controller firmware.
+add_subdirectory(${USC_FIRMWARE_PATH}/drivers/ds3231 ${CMAKE_BINARY_DIR}/ds3231)
+
 # Leaping arches: the Arch and Archimation classes.
 add_subdirectory(arches)
+
+# The New Year's Eve countdown show.
+add_subdirectory(newyear)
 
 # Add executable. Default name is the project name, version 0.1
 
@@ -96,3 +107,19 @@ target_link_libraries(LeapingArches
     pico_stdlib
 )
 pico_add_extra_outputs(LeapingArches)
+
+# The New Year's Eve countdown, as its own firmware.
+add_executable(NewYear NewYear.cpp)
+pico_set_program_name(NewYear "NewYear")
+pico_set_program_version(NewYear "0.1")
+pico_enable_stdio_uart(NewYear 1)
+pico_enable_stdio_usb(NewYear 1)
+target_link_libraries(NewYear
+    NewYearShow
+    PicoLEDs
+    usc_status_lights
+    usc_ds3231
+    hardware_i2c
+    pico_stdlib
+)
+pico_add_extra_outputs(NewYear)

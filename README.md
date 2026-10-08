@@ -62,3 +62,28 @@ Open the folder in VS Code with the Raspberry Pi Pico extension and use
 cmake -B build -G Ninja
 ninja -C build
 ```
+
+## New Year's Eve countdown
+
+`NewYear` is a separate firmware for New Year's Eve, built from `NewYear.cpp`
+and the `newyear/` library. One pixel goes dark per second for the last
+6,400 seconds (1 h 46 m 40 s) before midnight, working down from the top of
+the tree. Twinkles play in the part that's still lit. The last minute pulses
+with the seconds shown big, the last ten seconds zoom in digit by digit, and
+midnight brings a flash, fireworks and the new year.
+
+The time comes from the board's DS3231 RTC, which keeps UTC. Set
+`UTC_OFFSET_MINUTES` in `NewYear.cpp` to the tree's time zone. Over serial:
+
+| Command | What it does |
+|---|---|
+| `T 2026-12-31 22:00:00` | Set the local time (and the RTC) |
+| `R` | Rehearse the whole countdown at 60x, in under 2 minutes |
+| `R 15 1` | Rehearse the last 15 seconds in real time |
+| `N` | Stop rehearsing and go back to the real time |
+| `S` | Print the status |
+
+Status light 0 is green when the show knows the time and red when it doesn't.
+
+It needs PicoLEDs with `TwinkleFox` and the Fireworks fixes
+(eelstretching/PicoLEDs#2).
