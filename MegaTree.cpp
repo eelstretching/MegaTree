@@ -20,6 +20,7 @@
 #include "LinesFill.h"
 #include "Marquees.h"
 #include "Spiral.h"
+#include "Starlight.h"
 #include "Strip.h"
 #include <ScrollTexts.h>
 #include <FontTwoP.h>
@@ -117,6 +118,13 @@ int main() {
     ColorCone cone(&canvas, &xmasColors);
     cone.setName("Cone");
     animator.addTimed(&cone, 10000);
+
+    //
+    // A calm gold glow with slow warm-white glints, given a long turn since
+    // it's meant to be restful.
+    Starlight starlight(&canvas);
+    starlight.setName("Starlight");
+    animator.addTimed(&starlight, 60000);
 
     Marquees fancyMarq(&canvas, &xmasColors, 5, rgbwgColors, 20, RIGHT,
                        canvas.getHeight());
