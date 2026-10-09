@@ -1,22 +1,23 @@
-#include "Starlight.h"
+#include "TopperStarlight.h"
 
 #include "colorutils.h"
 #include "math8.h"
 
-Starlight::Starlight(Topper* topper, const RGB& glow, const RGB& glint,
-                     uint8_t rate, uint8_t keep)
+TopperStarlight::TopperStarlight(Topper* topper, const RGB& glow,
+                                 const RGB& glint, uint8_t rate,
+                                 uint8_t keep)
     : TopperAnimation(topper, nullptr),
       glow(glow),
       glint(glint),
       rate(rate),
       keep(keep) {}
 
-void Starlight::init() {
+void TopperStarlight::init() {
     glints.assign(topper->getNumPixels(), 0);
     breath = 0;
 }
 
-bool Starlight::step() {
+bool TopperStarlight::step() {
     uint n = topper->getNumPixels();
     if (glints.size() != n) {
         glints.assign(n, 0);

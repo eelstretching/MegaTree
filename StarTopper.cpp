@@ -7,10 +7,10 @@
 #include "RadiatingRainbow.h"
 #include "RingChase.h"
 #include "Shockwave.h"
-#include "Starlight.h"
 #include "Strip.h"
 #include "Topper.h"
 #include "TopperAnimator.h"
+#include "TopperStarlight.h"
 #include "WiringCheck.h"
 #include "pico/stdio.h"
 #include "pico/stdlib.h"
@@ -96,7 +96,7 @@ int main() {
     ringChase.setName("RingChase");
     animator.addTimed(&ringChase, 20000);
 
-    Starlight starlight(&topper);
+    TopperStarlight starlight(&topper);
     starlight.setName("Starlight");
     animator.addTimed(&starlight, 30000);
 

@@ -78,9 +78,9 @@ innermost ring first on one output.
   middle, or falling in), `Pinwheel` (spinning blades of color, curled into a
   spiral with a twist: a rainbow spiral, a peppermint), `Shockwave` (bursts of
   color racing out to the tips), `RingChase` (a comet round each ring, the
-  rings taking turns to go each way), `Starlight` (a breathing gold glow with
-  white glints), `PointChase` (the five points light in turn) and `ColorWipe`
-  (colors sweep across the star from a new direction each time).
+  rings taking turns to go each way), `TopperStarlight` (a breathing gold
+  glow with white glints), `PointChase` (the five points light in turn) and
+  `ColorWipe` (colors sweep across the star from a new direction each time).
 - `WiringCheck` shows whether the ring starts and directions are right; its
   header says how to read it.
 

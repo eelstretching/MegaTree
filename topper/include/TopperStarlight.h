@@ -1,5 +1,5 @@
-#ifndef STARLIGHT_H
-#define STARLIGHT_H
+#ifndef TOPPERSTARLIGHT_H
+#define TOPPERSTARLIGHT_H
 
 #pragma once
 
@@ -9,7 +9,7 @@
 
 /// @brief The star glows a warm gold that slowly breathes, while bright
 /// glints twinkle across it and fade away.
-class Starlight : public TopperAnimation {
+class TopperStarlight : public TopperAnimation {
    protected:
     /// @brief The color the star glows.
     RGB glow;
@@ -35,7 +35,7 @@ class Starlight : public TopperAnimation {
     /// @param glint the color of the glints
     /// @param rate the chance, out of 256, that a new glint starts each frame
     /// @param keep how much of a glint survives each frame, out of 255
-    Starlight(Topper* topper, const RGB& glow = RGB(213, 150, 20),
+    TopperStarlight(Topper* topper, const RGB& glow = RGB(213, 150, 20),
               const RGB& glint = RGB::White, uint8_t rate = 128,
               uint8_t keep = 220);
 
