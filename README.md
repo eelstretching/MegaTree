@@ -53,6 +53,40 @@ path at configure time if they live elsewhere.
 
 The `LeapingArches` program runs them on three 80-pixel arches on GPIO10.
 
+## Star topper
+
+`topper/` holds support for a star tree topper, built as the `Topper` library.
+It's laid out for HolidayCoro's [24" 3 row star](https://www.holidaycoro.com/product-p/123-24.htm)
+(123-24): 90 nodes in three star-shaped rings of 20, 30 and 40, wired
+innermost ring first on one output.
+
+- `Topper` is the star: a run of pixels on a `Strip`, with its own
+  `Renderer` like `ArchSet`. Each ring is a star outline with a node on every
+  tip and valley and the same number along each edge. The topper works out
+  where every pixel is (`getPixel()` gives x and y, the angle round from the
+  top, the distance from the centre, the ring, and the nearest point), so
+  animations can draw by position.
+- Pixels are numbered clockwise round each ring from the top tip, as seen
+  from the front, whatever the wiring. `setRingStart()` and
+  `setRingReversed()` say where each ring's wire really starts and which way
+  it runs. HolidayCoro wires them clockwise from the front, but doesn't say
+  where they start, so the default (every ring starting at the top tip) is a
+  guess.
+- `TopperAnimation`, `MultiTopperAnimation`, `TimedTopperAnimation` and
+  `TopperAnimator` are the topper's versions of the arch classes.
+- Animations: `RadiatingRainbow` (rainbow rings radiating out from the
+  middle, or falling in), `Pinwheel` (spinning blades of color, curled into a
+  spiral with a twist: a rainbow spiral, a peppermint), `Shockwave` (bursts of
+  color racing out to the tips), `RingChase` (a comet round each ring, the
+  rings taking turns to go each way), `Starlight` (a breathing gold glow with
+  white glints), `PointChase` (the five points light in turn) and `ColorWipe`
+  (colors sweep across the star from a new direction each time).
+- `WiringCheck` shows whether the ring starts and directions are right; its
+  header says how to read it.
+
+The `StarTopper` program runs them on GPIO11. Set `WIRING_CHECK` to 1 in
+`StarTopper.cpp` to run only the wiring check.
+
 ## Building
 
 Open the folder in VS Code with the Raspberry Pi Pico extension and use
