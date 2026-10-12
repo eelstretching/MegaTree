@@ -87,3 +87,16 @@ Status light 0 is green when the show knows the time and red when it doesn't.
 
 It needs PicoLEDs with `TwinkleFox` and `Fireworks2D`
 (eelstretching/PicoLEDs#2).
+
+## Show docs
+
+Build notes for the 2026 show, in `docs/`:
+
+- [base-ring.md](docs/base-ring.md): the PEX half ring at the bottom of the
+  tree that the strands tension against.
+- [power.md](docs/power.md): power supplies, fuse blocks and the perfboard
+  bank boards that give every strand one 3-wire cable, with wire sizes.
+- [mini-trees.md](docs/mini-trees.md): the two mini trees built from last
+  year's pixels.
+- [christmas-2026-plan.md](docs/christmas-2026-plan.md): the week-by-week
+  plan to Thanksgiving and the parts list, as of 2026-10-12.
