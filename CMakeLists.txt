@@ -71,6 +71,9 @@ add_subdirectory(arches)
 # The New Year's Eve countdown show.
 add_subdirectory(newyear)
 
+# The star tree topper: the Topper class and its animations.
+add_subdirectory(topper)
+
 # Add executable. Default name is the project name, version 0.1
 
 add_executable(MegaTree MegaTree.cpp)
@@ -123,3 +126,15 @@ target_link_libraries(NewYear
     pico_stdlib
 )
 pico_add_extra_outputs(NewYear)
+
+# A demo of the star topper animations on a single output.
+add_executable(StarTopper StarTopper.cpp)
+pico_set_program_name(StarTopper "StarTopper")
+pico_set_program_version(StarTopper "0.1")
+pico_enable_stdio_uart(StarTopper 1)
+pico_enable_stdio_usb(StarTopper 1)
+target_link_libraries(StarTopper
+    Topper
+    pico_stdlib
+)
+pico_add_extra_outputs(StarTopper)
