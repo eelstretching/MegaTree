@@ -99,7 +99,7 @@ Checkpoint: every prop runs on its own schedule from dusk to bedtime without any
 - [ ] Test last year's pixels; count dead nodes and work out their color order
 - [ ] Build the mini-tree controllers
 - [ ] Set the on and off times (DS3231 or a light sensor) on every controller
-- [ ] Weekend: build and place the mini trees
+- [ ] Weekend: build and place the mini trees (270 degrees, open back toward the house; print the [hub template](templates/mini-tree-hub-270.pdf))
 - [ ] Weekend: put everything on PicoComm if the basement test passed; otherwise each prop runs its own playlist
 - [ ] Weekend: build the spare controller if there is time
 
@@ -140,7 +140,8 @@ breakouts, screw terminals.
 - [ ] 47 ohm resistors, about 75
 - [ ] [Cable gland kit, PG7 to PG19](https://www.amazon.com/AMPELE-Plastic-Waterproof-Connectors-Gaskets/dp/B08TCDZ8LN)
 - [ ] [Wago 221 lever nut assortment](https://www.amazon.com/Compact-Splicing-Connector-Assortment-221-2401/dp/B0BN6MBR7X) for the AC side
-- [ ] [4 inch ball bungees, 100-pack](https://www.amazon.com/clp/B001BNS5P2) (52 for the mini trees, 32 for the MegaTree)
+- [ ] [4 inch ball bungees, 100-pack](https://www.amazon.com/clp/B001BNS5P2) (58 for the mini trees, 32 for the MegaTree)
+- [ ] UV-resistant paracord, about 30 ft, for the mini trees' back guys
 - [ ] [UV-resistant 8 inch black zip ties](https://www.amazon.com/Resistant-Self-Locking-Plastic-Indoor-Outdoor/dp/B09WVNDV7Y)
 - [ ] [Permatex dielectric grease](https://amazon.com/Permatex-81150-Dielectric-Grease-33/dp/B01LRDBSCW) and an [adhesive-lined heat shrink kit](https://www.amazon.com/270-pcs-Adhesive-Assortment-MILAPEAK/dp/B0771K1Z7Q)
 - [ ] [Ferrule crimper with ferrules](https://www.amazon.com/IWISS-End-sleeves-Crimping-Electrician-Contractors/dp/B07LCF39W9)

@@ -9,13 +9,19 @@ Each tree is a cone about 48 inches tall: a 4 ft black-pipe pole, a 10 inch plyw
 and a 36 inch PEX hoop at the bottom. Each strand folds over the hub, so it makes two of the 26
 columns (50 pixels up, 50 down) and both of its ends land at the bottom, next to the controller.
 
+The columns cover the 270 degrees facing the street, like the MegaTree's 180, and leave the back
+open toward the house. That makes the visible side about 28% denser than spreading them all the
+way round, and nothing shines into the windows. A tree that will be seen from every side can use
+the same parts at 360 degrees instead: 13.85 degrees between holes (a compass set to 1.09 inches
+walks them out) and no back guys.
+
 ![Mini tree side view and hub](images/mini-tree.svg)
 
 | Part | Size | Why |
 | --- | --- | --- |
-| Columns | 26, 13.85 degrees apart, 50 pixels each at 1 inch | 13 strands of 100, folded at the top |
-| Hub | 10 inch plywood disk, 26 holes on a 9 inch circle | columns sit 1.21 inches apart at the top, well inside the 4 inches of wire between pixels 50 and 51 |
-| Base hoop | 36 inch circle of 1/2 inch PEX, about 9.5 ft | base about 0.74 x height, the same cone shape as the MegaTree; columns 4.35 inches apart at the bottom |
+| Columns | 26 over 270 degrees, 10.8 degrees apart, 50 pixels each at 1 inch | 13 strands of 100, folded at the top |
+| Hub | 10 inch plywood disk, 26 holes over 270 degrees of a 9 inch circle, 0.85 inch apart | well inside the 4 inches of wire between pixels 50 and 51 |
+| Base hoop | 36 inch circle of 1/2 inch PEX, about 9.5 ft | base about 0.74 x height, the same cone shape as the MegaTree; columns 3.4 inches apart at the bottom. The hoop stays a full circle to anchor the back guys |
 | Height to hub | about 48.3 inches | 50 inch slant with the hoop 13 inches out from the hub edge |
 | Lean | 15 degrees from vertical | |
 
@@ -27,15 +33,20 @@ A 20 inch hub would also clear the fold, but it leaves a flat, wide top on a 36 
    1/2 inch rebar driven 18 to 24 inches into the lawn (the pipe's bore is about 0.82 inch). Paint
    it, or buy galvanized, so it doesn't streak rust. Drive the rebar before the ground freezes.
 2. **Hub.** Screw a 3/4 inch floor flange to the centre of the plywood disk and thread it onto the
-   pole. Mark the 26 holes by setting a compass to 1.09 inches and walking it around a 9 inch
-   circle. Drill 3/16 inch for zip ties, then seal every face and especially the edge with
-   exterior paint or spar urethane.
+   pole. Print [the hub template](templates/mini-tree-hub-270.pdf) at actual size on US letter
+   (check its 2 inch bar with a ruler), centre it on the disk, turn the street arrow to face the
+   street, and centre-punch the 26 holes through it. Drill 3/16 inch for zip ties, then seal
+   every face and especially the edge with exterior paint or spar urethane.
 3. **Strips.** Cut each mounting strip between pixels 50 and 51 without cutting the wire. Zip-tie
    the tops of the two halves to neighbouring holes so the wire loop sits over the rim.
 4. **Hoop.** Close 9.5 ft of 1/2 inch PEX with one push-fit coupling, centre it on the pole and pin
    it with 4 landscape staples.
 5. **Tension.** A 4 inch ball bungee from the bottom of each strip to the hoop, as on the
-   MegaTree ring. Every column leaning evenly is the check.
+   MegaTree ring. With no strips at the back, they pull the top of the pole toward the street
+   with about a quarter of their combined pull, so tie 2 or 3 back guys of UV-resistant cord
+   around the pipe just under the flange and run them to the back of the hoop, each with a ball
+   bungee at the hoop end. Tension the guys until the pole stands plumb; every column leaning
+   evenly is the check.
 6. **Feed.** Each strand's pixel 1 is at the bottom of every other column. Run 13 leads from the
    controller box at the pole base.
 
@@ -58,5 +69,5 @@ pigtail.
 ## Parts per tree
 
 A 48 inch 3/4 inch black pipe, a 3/4 inch floor flange, 3 ft of 1/2 inch rebar, 10 ft of 1/2 inch
-PEX and one push-fit coupling, 4 landscape staples, 26 small ball bungees, UV-rated zip ties, and
-exterior paint.
+PEX and one push-fit coupling, 4 landscape staples, 29 small ball bungees (26 strips and 3 back
+guys), about 15 ft of UV-resistant cord for the guys, UV-rated zip ties, and exterior paint.
