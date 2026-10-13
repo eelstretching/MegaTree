@@ -19,7 +19,8 @@ supply, made of a fuse block mounted beside a bank board with 8 outputs and its 
   a 12 AWG solid ground bus along the back of the bank board tied to the block's negative bus. The
   pads only ever carry one strand's current.
 - **Logic.** The Pico 2 W sits on its own small board with a 12 to 5 V buck, and reaches each
-  bank board over a 10-wire ribbon (8 data lines and ground).
+  bank board over a 16-pin ribbon that carries the 8 data lines and both of the level shifter's
+  supplies (see [the ribbon](#the-ribbon-and-the-level-shifter) below).
 - **One ground, separate 12 V rails.** Tie every supply's negative and the Pico's ground
   together; never join two supplies' positives.
 - **Fuse size.** Size each fuse to the strand's wire, not its load: 5 A suits 18 AWG pigtails and
@@ -28,6 +29,49 @@ supply, made of a fuse block mounted beside a bank board with 8 outputs and its 
   goes into the screw terminal and the plug goes out through a cable gland. No soldering.
 - **AC side.** Lever connectors under a cover, and the cord through a gland with strain relief.
   Check the LRS-350's 115/230 V input switch before first power-up.
+
+## The ribbon and the level shifter
+
+The SN74LVC8T245 needs two supplies: 3.3 V on its A side, so it reads the Pico's 3.3 V signals
+correctly, and 5 V on its B side, so the pixels get a full 5 V data signal. Both draw only a few
+milliamps, so the Pico board sends them down the ribbon: 3.3 V from the Pico's 3V3 pin and 5 V
+from the buck. The bank board then needs nothing but 12 V for the strands.
+
+The ribbon is 16-wire, with a 16-pin (2x8) IDC socket on each end and a shrouded 2x8 box header
+on each board, so it only plugs in one way. Crimp both sockets onto the same face of the ribbon
+with the socket's triangle on the red stripe, so pin 1 lands on pin 1 at both ends, and check
+each new cable with a continuity tester. A clamp and two scraps of wood press a socket closed
+evenly; pliers close one end first.
+
+Every data line has a ground on the wire next to it:
+
+| Pin | Signal | Pin | Signal |
+| --- | --- | --- | --- |
+| 1 | ground | 2 | data 1 |
+| 3 | data 2 | 4 | ground |
+| 5 | data 3 | 6 | data 4 |
+| 7 | ground | 8 | data 5 |
+| 9 | data 6 | 10 | ground |
+| 11 | data 7 | 12 | data 8 |
+| 13 | ground | 14 | 3.3 V |
+| 15 | 5 V | 16 | ground |
+
+On the 2x8 header the odd pins are one row and the even pins the other.
+
+Level shifter pins (from TI's SN74LVC8T245 datasheet):
+
+| Shifter pin | Connect to |
+| --- | --- |
+| 1, VCCA | ribbon 3.3 V |
+| 2, DIR | VCCA, so data always runs A to B |
+| 3-10, A1-A8 | ribbon data 1-8 |
+| 11, 12, 13, GND | ground |
+| 14-21, B8-B1 | through a 47 ohm resistor each to terminals 8-1 (B1 is pin 21, so the order runs backwards) |
+| 22, OE | ground, so the outputs are always on |
+| 23, 24, VCCB | ribbon 5 V |
+
+Put a 0.1 uF ceramic capacitor from VCCA to ground and another from VCCB to ground, right at the
+chip.
 
 ## Banks per prop
 
@@ -68,4 +112,5 @@ drop = 2 x length in feet x amps x ohms per foot (18 AWG 0.0064, 16 AWG 0.0040, 
   [LRS-150-12](https://www.bravoelectro.com/lrs-150-12.html) (Bravo Electro)
 - Enclosure sizes: [Pierce Lights](https://www.piercelights.com/tech/enclosures)
 - Per-node current: [auschristmaslighting.com](https://auschristmaslighting.com/threads/reference-of-current-draws-of-common-rgb-lights-used.3812/)
+- Level shifter pinout: [TI SN74LVC8T245 datasheet](https://www.ti.com/lit/ds/symlink/sn74lvc8t245.pdf)
 - Mini-tree pixels: [Wally's Lights 12 V WS2811 xConnect bullet pixel](https://wallyslights.com/products/12v-ws2811-xconnect-resistor-bullet-pixel?variant=39808961413278)

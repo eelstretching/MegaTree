@@ -135,7 +135,7 @@ breakouts, screw terminals.
 - [ ] Blade fuse blocks with negative bus: 6 x [Blue Sea 5026, 12-circuit](https://www.amazon.com/Blue-Sea-Systems-Blade-Block/dp/B001P6FTHC) and 4 x [Blue Sea 5025, 6-circuit](https://www.amazon.com/Blue-Sea-Systems-5025-Block/dp/B00KOEK0NE)
 - [ ] 5 A ATO/ATC blade fuses: a [100-pack](https://www.amazon.com/clp/B07WS16MF9), or [Bussmann ATC-5](https://www.amazon.com/clp/B01MXE2PHR)
 - [ ] 12 to 5 V buck converters x6, such as [this potted 3 A module](https://www.amazon.com/Converter-Voltage-Waterproof-Regulator-Step-Down/dp/B07Y2V1F8V)
-- [ ] [10-pin IDC sockets](https://www.amazon.com/CablesOnline-10-Pack-10-Pin-Connectors-FC-010-10/dp/B07W5C4P6Z) and 10-wire ribbon
+- [ ] 16-pin (2x8) IDC sockets, a [50-pack](https://www.amazon.com/PC-Accessories-Connectors-50-Pack-Connector/dp/B00E57QQVG), about 20 shrouded 2x8 box headers, and 16-wire ribbon (see [the ribbon](power.md#the-ribbon-and-the-level-shifter))
 - [ ] Perfboard, at least 10 x 15 cm per bank board, for about 10 bank boards and 6 Pico boards
 - [ ] 47 ohm resistors, about 75
 - [ ] [Cable gland kit, PG7 to PG19](https://www.amazon.com/AMPELE-Plastic-Waterproof-Connectors-Gaskets/dp/B08TCDZ8LN)
