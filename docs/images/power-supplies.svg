@@ -1,0 +1,171 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 940 733' width='940' height='733' role='img' aria-label='How the supplies tie together: each supply feeds only its own fuse block, the grounds all join, the +12 V rails never do' font-family='-apple-system, Segoe UI, Helvetica, Arial, sans-serif' font-size='13'>
+<rect width='940' height='733' fill='#ffffff'/>
+<text x='24.0' y='30.0' font-size='15' font-weight='600' fill='#1f2328' text-anchor='start'>How the supplies tie together</text>
+<text x='24.0' y='50.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='start'>Each supply feeds only its own fuse block. All the grounds join into one; the +12 V rails never do.</text>
+<path d='M24 72H50' fill='none' stroke='#cf222e' stroke-width='1.75' stroke-linejoin='round'/>
+<text x='56.0' y='76.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='start'>+12 V</text>
+<path d='M117.0 72H143.0' fill='none' stroke='#1f2328' stroke-width='1.75' stroke-linejoin='round'/>
+<text x='149.0' y='76.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='start'>ground (supply −V)</text>
+<path d='M295.8 72H321.8' fill='none' stroke='#8c959f' stroke-width='1.75' stroke-linejoin='round'/>
+<text x='327.8' y='76.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='start'>AC</text>
+<path d='M369.0 72H395.0' fill='none' stroke='#0969da' stroke-width='3' stroke-linejoin='round'/>
+<text x='401.0' y='76.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='start'>16-pin ribbon</text>
+<text x='24.0' y='108.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='start'>MegaTree: four LRS-350-12s, four banks, one Pico</text>
+<rect x='24' y='172.0' width='92' height='48' rx='8' fill='#ffffff' fill-opacity='1' stroke='#8c959f' stroke-width='1.25'/>
+<text x='70.0' y='193.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='middle'>AC cord</text>
+<text x='70.0' y='210.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>circuit A</text>
+<rect x='136' y='172.0' width='100' height='48' rx='8' fill='#ffffff' fill-opacity='1' stroke='#8c959f' stroke-width='1.25'/>
+<text x='186.0' y='193.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='middle'>Lever nuts</text>
+<text x='186.0' y='210.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>L, N, earth</text>
+<path d='M116 196.0H136' fill='none' stroke='#8c959f' stroke-width='1.75' stroke-linejoin='round'/>
+<path d='M236 196.0H252V160H270M252 196.0V232H270' fill='none' stroke='#8c959f' stroke-width='1.75' stroke-linejoin='round'/>
+<rect x='24' y='316.0' width='92' height='48' rx='8' fill='#ffffff' fill-opacity='1' stroke='#8c959f' stroke-width='1.25'/>
+<text x='70.0' y='337.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='middle'>AC cord</text>
+<text x='70.0' y='354.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>circuit B</text>
+<rect x='136' y='316.0' width='100' height='48' rx='8' fill='#ffffff' fill-opacity='1' stroke='#8c959f' stroke-width='1.25'/>
+<text x='186.0' y='337.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='middle'>Lever nuts</text>
+<text x='186.0' y='354.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>L, N, earth</text>
+<path d='M116 340.0H136' fill='none' stroke='#8c959f' stroke-width='1.75' stroke-linejoin='round'/>
+<path d='M236 340.0H252V304H270M252 340.0V376H270' fill='none' stroke='#8c959f' stroke-width='1.75' stroke-linejoin='round'/>
+<rect x='270' y='136' width='120' height='48' rx='8' fill='#ffffff' fill-opacity='1' stroke='#8c959f' stroke-width='1.25'/>
+<text x='330.0' y='157.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='middle'>Supply 1</text>
+<text x='330.0' y='174.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>LRS-350-12</text>
+<text x='386.0' y='155.0' font-size='10.5' font-weight='600' fill='#cf222e' text-anchor='end'>+V</text>
+<text x='386.0' y='177.0' font-size='10.5' font-weight='600' fill='#1f2328' text-anchor='end'>−V</text>
+<path d='M390 151H452' fill='none' stroke='#cf222e' stroke-width='1.75' stroke-linejoin='round'/>
+<path d='M390 172H452' fill='none' stroke='#1f2328' stroke-width='1.75' stroke-linejoin='round'/>
+<rect x='452' y='136' width='112' height='48' rx='8' fill='#ffffff' fill-opacity='1' stroke='#8c959f' stroke-width='1.25'/>
+<text x='508.0' y='157.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='middle'>Fuse block 1</text>
+<text x='508.0' y='174.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>12-way</text>
+<text x='458.0' y='155.0' font-size='10.5' font-weight='600' fill='#cf222e' text-anchor='start'>+</text>
+<text x='458.0' y='177.0' font-size='10.5' font-weight='600' fill='#1f2328' text-anchor='start'>−</text>
+<path d='M564 151H642' fill='none' stroke='#cf222e' stroke-width='1.75' stroke-linejoin='round'/>
+<path d='M564 172H642' fill='none' stroke='#1f2328' stroke-width='1.75' stroke-linejoin='round'/>
+<rect x='642' y='136' width='112' height='48' rx='8' fill='#0969da' fill-opacity='0.12' stroke='#0969da' stroke-width='1.5'/>
+<text x='698.0' y='157.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='middle'>Bank board 1</text>
+<text x='698.0' y='174.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>8 strands</text>
+<path d='M754 160H812' fill='none' stroke='#0969da' stroke-width='3' stroke-linejoin='round'/>
+<path d='M492 184V208' fill='none' stroke='#1f2328' stroke-width='2.25' stroke-linejoin='round'/>
+<circle cx='492' cy='184' r='3' fill='#1f2328'/>
+<circle cx='492' cy='208' r='3' fill='#1f2328'/>
+<rect x='270' y='208' width='120' height='48' rx='8' fill='#ffffff' fill-opacity='1' stroke='#8c959f' stroke-width='1.25'/>
+<text x='330.0' y='229.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='middle'>Supply 2</text>
+<text x='330.0' y='246.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>LRS-350-12</text>
+<text x='386.0' y='227.0' font-size='10.5' font-weight='600' fill='#cf222e' text-anchor='end'>+V</text>
+<text x='386.0' y='249.0' font-size='10.5' font-weight='600' fill='#1f2328' text-anchor='end'>−V</text>
+<path d='M390 223H452' fill='none' stroke='#cf222e' stroke-width='1.75' stroke-linejoin='round'/>
+<path d='M390 244H452' fill='none' stroke='#1f2328' stroke-width='1.75' stroke-linejoin='round'/>
+<rect x='452' y='208' width='112' height='48' rx='8' fill='#ffffff' fill-opacity='1' stroke='#8c959f' stroke-width='1.25'/>
+<text x='508.0' y='229.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='middle'>Fuse block 2</text>
+<text x='508.0' y='246.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>12-way</text>
+<text x='458.0' y='227.0' font-size='10.5' font-weight='600' fill='#cf222e' text-anchor='start'>+</text>
+<text x='458.0' y='249.0' font-size='10.5' font-weight='600' fill='#1f2328' text-anchor='start'>−</text>
+<path d='M564 223H642' fill='none' stroke='#cf222e' stroke-width='1.75' stroke-linejoin='round'/>
+<path d='M564 244H642' fill='none' stroke='#1f2328' stroke-width='1.75' stroke-linejoin='round'/>
+<rect x='642' y='208' width='112' height='48' rx='8' fill='#0969da' fill-opacity='0.12' stroke='#0969da' stroke-width='1.5'/>
+<text x='698.0' y='229.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='middle'>Bank board 2</text>
+<text x='698.0' y='246.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>8 strands</text>
+<path d='M754 232H812' fill='none' stroke='#0969da' stroke-width='3' stroke-linejoin='round'/>
+<path d='M492 256V280' fill='none' stroke='#1f2328' stroke-width='2.25' stroke-linejoin='round'/>
+<circle cx='492' cy='256' r='3' fill='#1f2328'/>
+<circle cx='492' cy='280' r='3' fill='#1f2328'/>
+<rect x='270' y='280' width='120' height='48' rx='8' fill='#ffffff' fill-opacity='1' stroke='#8c959f' stroke-width='1.25'/>
+<text x='330.0' y='301.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='middle'>Supply 3</text>
+<text x='330.0' y='318.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>LRS-350-12</text>
+<text x='386.0' y='299.0' font-size='10.5' font-weight='600' fill='#cf222e' text-anchor='end'>+V</text>
+<text x='386.0' y='321.0' font-size='10.5' font-weight='600' fill='#1f2328' text-anchor='end'>−V</text>
+<path d='M390 295H452' fill='none' stroke='#cf222e' stroke-width='1.75' stroke-linejoin='round'/>
+<path d='M390 316H452' fill='none' stroke='#1f2328' stroke-width='1.75' stroke-linejoin='round'/>
+<rect x='452' y='280' width='112' height='48' rx='8' fill='#ffffff' fill-opacity='1' stroke='#8c959f' stroke-width='1.25'/>
+<text x='508.0' y='301.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='middle'>Fuse block 3</text>
+<text x='508.0' y='318.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>12-way</text>
+<text x='458.0' y='299.0' font-size='10.5' font-weight='600' fill='#cf222e' text-anchor='start'>+</text>
+<text x='458.0' y='321.0' font-size='10.5' font-weight='600' fill='#1f2328' text-anchor='start'>−</text>
+<path d='M564 295H642' fill='none' stroke='#cf222e' stroke-width='1.75' stroke-linejoin='round'/>
+<path d='M564 316H642' fill='none' stroke='#1f2328' stroke-width='1.75' stroke-linejoin='round'/>
+<rect x='642' y='280' width='112' height='48' rx='8' fill='#0969da' fill-opacity='0.12' stroke='#0969da' stroke-width='1.5'/>
+<text x='698.0' y='301.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='middle'>Bank board 3</text>
+<text x='698.0' y='318.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>8 strands</text>
+<path d='M754 304H812' fill='none' stroke='#0969da' stroke-width='3' stroke-linejoin='round'/>
+<path d='M492 328V352' fill='none' stroke='#1f2328' stroke-width='2.25' stroke-linejoin='round'/>
+<circle cx='492' cy='328' r='3' fill='#1f2328'/>
+<circle cx='492' cy='352' r='3' fill='#1f2328'/>
+<rect x='270' y='352' width='120' height='48' rx='8' fill='#ffffff' fill-opacity='1' stroke='#8c959f' stroke-width='1.25'/>
+<text x='330.0' y='373.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='middle'>Supply 4</text>
+<text x='330.0' y='390.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>LRS-350-12</text>
+<text x='386.0' y='371.0' font-size='10.5' font-weight='600' fill='#cf222e' text-anchor='end'>+V</text>
+<text x='386.0' y='393.0' font-size='10.5' font-weight='600' fill='#1f2328' text-anchor='end'>−V</text>
+<path d='M390 367H452' fill='none' stroke='#cf222e' stroke-width='1.75' stroke-linejoin='round'/>
+<path d='M390 388H452' fill='none' stroke='#1f2328' stroke-width='1.75' stroke-linejoin='round'/>
+<rect x='452' y='352' width='112' height='48' rx='8' fill='#ffffff' fill-opacity='1' stroke='#8c959f' stroke-width='1.25'/>
+<text x='508.0' y='373.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='middle'>Fuse block 4</text>
+<text x='508.0' y='390.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>12-way</text>
+<text x='458.0' y='371.0' font-size='10.5' font-weight='600' fill='#cf222e' text-anchor='start'>+</text>
+<text x='458.0' y='393.0' font-size='10.5' font-weight='600' fill='#1f2328' text-anchor='start'>−</text>
+<path d='M564 367H642' fill='none' stroke='#cf222e' stroke-width='1.75' stroke-linejoin='round'/>
+<path d='M564 388H642' fill='none' stroke='#1f2328' stroke-width='1.75' stroke-linejoin='round'/>
+<rect x='642' y='352' width='112' height='48' rx='8' fill='#0969da' fill-opacity='0.12' stroke='#0969da' stroke-width='1.5'/>
+<text x='698.0' y='373.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='middle'>Bank board 4</text>
+<text x='698.0' y='390.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>8 strands</text>
+<path d='M754 376H812' fill='none' stroke='#0969da' stroke-width='3' stroke-linejoin='round'/>
+<text x='420.0' y='147.0' font-size='10.5' font-weight='400' fill='#59636e' text-anchor='middle'>12 AWG</text>
+<text x='599.0' y='147.0' font-size='10.5' font-weight='400' fill='#59636e' text-anchor='middle'>18 AWG x 8</text>
+<text x='594.0' y='184.0' font-size='10.5' font-weight='400' fill='#59636e' text-anchor='middle'>12 AWG</text>
+<text x='783.0' y='155.0' font-size='10.5' font-weight='400' fill='#59636e' text-anchor='middle'>ribbon</text>
+<text x='500.0' y='202.0' font-size='10.5' font-weight='400' fill='#1f2328' text-anchor='start'>ground tie: 12 AWG from each negative stud to the next</text>
+<text x='420.0' y='346.0' font-size='10.5' font-weight='600' fill='#cf222e' text-anchor='middle'>the +12 V rails never join</text>
+<rect x='812' y='136' width='104' height='264' rx='8' fill='#ffffff' fill-opacity='1' stroke='#8c959f' stroke-width='1.25'/>
+<text x='864.0' y='258.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='middle'>Pico board</text>
+<text x='864.0' y='275.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>Pico 2 W</text>
+<text x='864.0' y='292.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>12 to 5 V buck</text>
+<path d='M522 136V122H882V136' fill='none' stroke='#cf222e' stroke-width='1.75' stroke-linejoin='round'/>
+<path d='M536 136V128H868V136' fill='none' stroke='#1f2328' stroke-width='1.75' stroke-linejoin='round'/>
+<text x='698.0' y='117.0' font-size='10.5' font-weight='400' fill='#59636e' text-anchor='middle'>fused 12 V and ground from a spare circuit on block 1</text>
+<text x='24.0' y='428.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='start'>Each supply connects to its own block only, on its own 12 AWG pair. The ground tie, the ribbons and the Pico join every ground.</text>
+<text x='24.0' y='445.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='start'>An LRS-350 can draw 6.8 A from the wall at full load, so each cord feeds two supplies and the two cords go on different circuits.</text>
+<text x='24.0' y='462.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='start'>Lever nuts split each cord's line, neutral and earth to the supplies' AC/L, AC/N and FG terminals.</text>
+<line x1='24' x2='916' y1='481' y2='481' stroke='#d0d7de'/>
+<text x='24.0' y='509.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='start'>Mini tree: one LRS-350-12 feeding two banks</text>
+<rect x='24' y='585.0' width='92' height='48' rx='8' fill='#ffffff' fill-opacity='1' stroke='#8c959f' stroke-width='1.25'/>
+<text x='70.0' y='606.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='middle'>AC cord</text>
+<text x='70.0' y='623.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>lever nuts</text>
+<path d='M116 609.0H270' fill='none' stroke='#8c959f' stroke-width='1.75' stroke-linejoin='round'/>
+<rect x='270' y='585.0' width='120' height='48' rx='8' fill='#ffffff' fill-opacity='1' stroke='#8c959f' stroke-width='1.25'/>
+<text x='330.0' y='606.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='middle'>Supply</text>
+<text x='330.0' y='623.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>LRS-350-12</text>
+<path d='M390 595.0H410V564H452' fill='none' stroke='#cf222e' stroke-width='1.75' stroke-linejoin='round'/>
+<path d='M390 603.0H420V585H452' fill='none' stroke='#1f2328' stroke-width='1.75' stroke-linejoin='round'/>
+<path d='M390 615.0H440V636H452' fill='none' stroke='#cf222e' stroke-width='1.75' stroke-linejoin='round'/>
+<path d='M390 623.0H430V657H452' fill='none' stroke='#1f2328' stroke-width='1.75' stroke-linejoin='round'/>
+<text x='330.0' y='577.0' font-size='10.5' font-weight='400' fill='#59636e' text-anchor='middle'>one 12 AWG pair per block</text>
+<rect x='452' y='549' width='112' height='48' rx='8' fill='#ffffff' fill-opacity='1' stroke='#8c959f' stroke-width='1.25'/>
+<text x='508.0' y='570.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='middle'>Fuse block 1</text>
+<text x='508.0' y='587.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>12-way</text>
+<text x='458.0' y='568.0' font-size='10.5' font-weight='600' fill='#cf222e' text-anchor='start'>+</text>
+<text x='458.0' y='590.0' font-size='10.5' font-weight='600' fill='#1f2328' text-anchor='start'>−</text>
+<path d='M564 564H642' fill='none' stroke='#cf222e' stroke-width='1.75' stroke-linejoin='round'/>
+<path d='M564 585H642' fill='none' stroke='#1f2328' stroke-width='1.75' stroke-linejoin='round'/>
+<rect x='642' y='549' width='112' height='48' rx='8' fill='#0969da' fill-opacity='0.12' stroke='#0969da' stroke-width='1.5'/>
+<text x='698.0' y='570.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='middle'>Bank board 1</text>
+<text x='698.0' y='587.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>8 strands</text>
+<path d='M754 573H812' fill='none' stroke='#0969da' stroke-width='3' stroke-linejoin='round'/>
+<rect x='452' y='621' width='112' height='48' rx='8' fill='#ffffff' fill-opacity='1' stroke='#8c959f' stroke-width='1.25'/>
+<text x='508.0' y='642.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='middle'>Fuse block 2</text>
+<text x='508.0' y='659.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>6-way</text>
+<text x='458.0' y='640.0' font-size='10.5' font-weight='600' fill='#cf222e' text-anchor='start'>+</text>
+<text x='458.0' y='662.0' font-size='10.5' font-weight='600' fill='#1f2328' text-anchor='start'>−</text>
+<path d='M564 636H642' fill='none' stroke='#cf222e' stroke-width='1.75' stroke-linejoin='round'/>
+<path d='M564 657H642' fill='none' stroke='#1f2328' stroke-width='1.75' stroke-linejoin='round'/>
+<rect x='642' y='621' width='112' height='48' rx='8' fill='#0969da' fill-opacity='0.12' stroke='#0969da' stroke-width='1.5'/>
+<text x='698.0' y='642.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='middle'>Bank board 2</text>
+<text x='698.0' y='659.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>5 strands</text>
+<path d='M754 645H812' fill='none' stroke='#0969da' stroke-width='3' stroke-linejoin='round'/>
+<rect x='812' y='549' width='104' height='120' rx='8' fill='#ffffff' fill-opacity='1' stroke='#8c959f' stroke-width='1.25'/>
+<text x='864.0' y='599.0' font-size='13' font-weight='600' fill='#1f2328' text-anchor='middle'>Pico board</text>
+<text x='864.0' y='616.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>Pico 2 W</text>
+<text x='864.0' y='633.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='middle'>12 to 5 V buck</text>
+<path d='M522 549V535H882V549' fill='none' stroke='#cf222e' stroke-width='1.75' stroke-linejoin='round'/>
+<path d='M536 549V541H868V549' fill='none' stroke='#1f2328' stroke-width='1.75' stroke-linejoin='round'/>
+<text x='24.0' y='703.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='start'>Both blocks hang off the same supply, so they share its +12 V and ground and need no tie between them. The rule is about two</text>
+<text x='24.0' y='720.0' font-size='11.5' font-weight='400' fill='#59636e' text-anchor='start'>different supplies' +12 V. An arch group is the simplest case: one LRS-150-12, one 6-way block, one bank board.</text>
+</svg>

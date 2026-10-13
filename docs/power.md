@@ -31,6 +31,26 @@ supply, made of a fuse block mounted beside a bank board with 8 outputs and its 
 - **AC side.** Lever connectors under a cover, and the cord through a gland with strain relief.
   Check the LRS-350's 115/230 V input switch before first power-up.
 
+## How the supplies tie together
+
+![How the supplies tie together: each supply feeds only its own fuse block](images/power-supplies.svg)
+
+- **Each supply feeds only its own fuse block,** on its own 12 AWG pair to the block's + stud and
+  negative bus. Never join two supplies' +12 V: tied together they fight over the load, and one can
+  end up carrying both.
+- **Every ground joins.** The MegaTree's fuse blocks are daisy-chained with 12 AWG from one
+  negative stud to the next, so the four supplies, the bank boards and the Pico share one ground
+  without leaning on the ribbon's thin wires.
+- **The Pico board** takes fused 12 V and ground from a spare circuit on block 1 and sends 3.3 V,
+  5 V and ground to every bank board over the ribbons.
+- **One supply, two blocks.** A mini tree's LRS-350 feeds both of its blocks, each on a separate
+  12 AWG pair from the supply's spare terminals (it has three +V and three -V). That is one rail,
+  so no tie is needed.
+- **Wall power.** An LRS-350 draws up to 6.8 A from the wall at full load, so one cord feeds at most
+  two of them and the tree's two cords go on different circuits. At last year's brightness they
+  draw far less. Lever nuts split each cord's line, neutral and earth to the supplies' AC/L, AC/N
+  and FG terminals.
+
 ## The ribbon and the level shifter
 
 The SN74LVC8T245 needs two supplies: 3.3 V on its A side, so it reads the Pico's 3.3 V signals
@@ -111,6 +131,7 @@ drop = 2 x length in feet x amps x ohms per foot (18 AWG 0.0064, 16 AWG 0.0040, 
 
 - Mean Well [LRS-350-12](https://www.bravoelectro.com/lrs-350-12.html) and
   [LRS-150-12](https://www.bravoelectro.com/lrs-150-12.html) (Bravo Electro)
+- LRS-350 AC current and terminals: [Mean Well LRS-350 datasheet](https://www.meanwell.com/Upload/PDF/LRS-350/LRS-350-SPEC.PDF)
 - Enclosure sizes: [Pierce Lights](https://www.piercelights.com/tech/enclosures)
 - Per-node current: [auschristmaslighting.com](https://auschristmaslighting.com/threads/reference-of-current-draws-of-common-rgb-lights-used.3812/)
 - Level shifter pinout: [TI SN74LVC8T245 datasheet](https://www.ti.com/lit/ds/symlink/sn74lvc8t245.pdf)
