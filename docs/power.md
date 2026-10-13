@@ -10,9 +10,10 @@ supply, made of a fuse block mounted beside a bank board with 8 outputs and its 
 - **Bank board.** Perfboard with an SN74LVC8T245 level shifter (on a TSSOP-24 breakout), a 47 ohm
   resistor on each data line, and 8 three-pin 5.08 mm screw terminals, one per strand. It carries
   data and ground; the 12 V for each terminal comes from the fuse block beside it.
-- **Fuse block beside each bank board.** A blade fuse block with a negative bus (Blue Sea ST
-  5026, 12 circuits, for an 8-output bank; 5025, 6 circuits, for a small one), mounted right next
-  to the terminal row. Each 5 A fuse feeds its strand's +12 V terminal through a short 18 AWG
+- **Fuse block beside each bank board.** A blade fuse block with a negative bus (12 circuits for
+  an 8-output bank, 6 for a small one), mounted right next to the terminal row. DaierTek blocks
+  have M5 studs (#10 rings) and M4 circuit screws (#8 rings); Blue Sea ST 5026 and 5025 are the
+  name-brand choice. Each 5 A fuse feeds its strand's +12 V terminal through a short 18 AWG
   jumper, so the fuse comes before the terminal and protects the jumper, the terminal and the
   whole strand cable. Spare circuits feed the 12 to 5 V buck and the star topper.
 - **Heavy current stays off the perfboard copper.** 12 AWG from the supply to the fuse block, and
