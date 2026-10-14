@@ -55,7 +55,7 @@ Checkpoint: parts ordered and the MegaTree controller drawn on paper.
 
 - [ ] Weeknight: do the power budget for every prop (pixels x watts per pixel at your brightness cap) and pick the supplies
 - [ ] Weeknight: plan the base layout: the strands are fed from the bottom (0,0 is lower right), so the controller boxes sit by the pole and short leads run to the ring; only the star topper needs a 17 ft run up the pole
-- [ ] Weeknight: draw the bank board (level shifter, 47 ohm resistors, a PTC and 3-pin terminal per output, 12 V and ground buses) and the small Pico board; see [Power architecture](#power-architecture)
+- [ ] Weeknight: draw the bank board (level shifter, 47 ohm resistors, a PTC and 3-pin terminal per output, 12 V and ground buses) and the small Pico board, with a 74AHCT125 for the star topper's data; see [Power architecture](#power-architecture)
 - [ ] Weeknight: order PTC fuses, Sterilite gasket boxes, cable glands, wire and connectors (see the [parts checklist](#parts-checklist))
 - [ ] Weeknight (fun): review and merge PicoLEDs#10 (40 fps clock) so all props share one frame rate
 - [ ] Weekend: travel; nothing planned
@@ -77,7 +77,7 @@ Checkpoint: the MegaTree controller and supply sealed in their enclosure, and th
 
 - [ ] Weeknight: mount the board and supply in the enclosure with glands, drip loops and strain relief
 - [ ] Weeknight: make up the data and power leads for the 32 strands and label every one
-- [ ] Weeknight: build the star topper output and run the WiringCheck from MegaTree#3 to find each ring's start node
+- [ ] Weeknight: build the star topper output (its 74AHCT125 on the Pico board, its RUEF500 and terminal on bank board 1) and run the WiringCheck from MegaTree#3 to find each ring's start node
 - [ ] Weeknight (fun): move MegaTree onto the 40 fps clock and pick the calm playlist
 - [ ] Sunday: cut and couple the 3/4 inch PEX half ring (20 ft), fit ball bungees and tension clips, test-fit on the lawn
 
@@ -218,6 +218,13 @@ outputs live on a bank board, one per supply with 8 outputs and its own level sh
   over a 16-pin ribbon: 8 data lines, 3.3 V for the level shifter's input side (from the Pico's 3V3
   pin), 5 V for its output side (from the buck), and 6 grounds, one beside each pair of data lines.
   The MegaTree has 4 banks, an arch group 1, and each mini tree 2 (8 + 5 outputs).
+- **The topper's data line.** The four level shifters' 32 channels all go to strands, so the star
+  topper's data gets a shifter of its own: a 74AHCT125, a through-hole quad buffer (DIP-14), on the
+  MegaTree's Pico board. It runs on the buck's 5 V and reads the Pico's 3.3 V as a clean high. Use
+  gate 1: the Pico's topper pin to 1A (pin 2), and 1Y (pin 3) out through a 47 ohm resistor. Give it
+  5 V on pin 14 and ground on pin 7, tie every enable pin (1, 4, 10, 13) and the spare inputs (5, 9,
+  12) to ground, and put a 0.1 uF capacitor from pin 14 to ground. A short 2-wire lead (data and
+  ground) takes the signal to the topper's 3-pin terminal on bank board 1, beside its RUEF500.
 - **One ground, separate 12 V rails.** Tie every supply's negative and the Pico's ground together;
   never join two supplies' positives.
 - **PTC size.** Size each PTC to the strand's wire, not its load. An RUEF400 is sure to trip by 8 A,
@@ -280,6 +287,7 @@ Order these in week 0 so nothing waits on shipping. Quantities assume 5 controll
 
 - [ ] Return the DaierTek blade fuse blocks if Amazon will take them back: the PTCs on the bank boards replace them, so no blade fuses are needed either
 - [ ] 12 to 5 V buck converters x6: buying two packs of the [AKEYSRC 6-pack](https://www.amazon.com/dp/B0GYJDP96Q) (5-30 V in, fixed 5 V, 3 A); check each one's output with a meter before soldering it in
+- [ ] 74AHCT125 quad buffers in DIP-14, a few (one for the tree's Pico board, plus spares): TI's SN74AHCT125N, or Adafruit's 74AHCT125 level shifter (product 1787)
 - [ ] 16-pin (2x8) IDC sockets, about 25 (a [50-pack](https://www.amazon.com/PC-Accessories-Connectors-50-Pack-Connector/dp/B00E57QQVG) leaves spares for mistakes), about 20 shrouded 2x8 through-hole box headers (0.1 inch, keyed), such as [uxcell, 24 pieces](https://www.amazon.com/uxcell-16-Pin-Straight-Connector-Sockets/dp/B010V43ACO) or [XINYIYUAN, 30 pieces](https://www.amazon.com/XINYIYUAN-16-Pin-Straight-Connector-Sockets/dp/B08NB8S42K), and 16-wire ribbon
 - [ ] Perfboard, at least 10 x 15 cm per bank board, for about 10 bank boards and 6 Pico boards. The non-AliExpress boards on hand take the 5.08 mm screw terminals as is; the AliExpress ones have holes too small
 - [ ] 47 ohm resistors, about 75, if your stash is short

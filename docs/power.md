@@ -27,6 +27,10 @@ shifter.
 - **Logic.** The Pico 2 W sits on its own small board with a 12 to 5 V buck, and reaches each
   bank board over a 16-pin ribbon that carries the 8 data lines and both of the level shifter's
   supplies (see [the ribbon](#the-ribbon-and-the-level-shifter) below).
+- **The topper's data line.** The four level shifters' 32 channels all go to strands, so the star
+  topper's data gets a shifter of its own on the MegaTree's Pico board (see
+  [the topper's buffer](#the-toppers-buffer) below). A short 2-wire lead (data and ground) takes
+  the signal to the topper's 3-pin terminal on bank board 1, beside its RUEF500.
 - **One ground, separate 12 V rails.** Tie every supply's negative and the Pico's ground
   together; never join two supplies' positives.
 - **PTC size.** Size each PTC to the strand's wire, not its load. An RUEF400 is sure to trip by
@@ -109,6 +113,23 @@ Level shifter pins (from TI's SN74LVC8T245 datasheet):
 Put a 0.1 uF ceramic capacitor from VCCA to ground and another from VCCB to ground, right at the
 chip.
 
+### The topper's buffer
+
+The topper's data comes from a 74AHCT125, a through-hole quad buffer (DIP-14, TI's SN74AHCT125N
+or Adafruit's product 1787), on the MegaTree's Pico board. It runs on the buck's 5 V, and its
+TTL-level inputs read the Pico's 3.3 V as a clean high. Only gate 1 is used:
+
+| Buffer pin | Connect to |
+| --- | --- |
+| 1, 1OE | ground, so gate 1 is always on |
+| 2, 1A | the Pico's topper pin |
+| 3, 1Y | through a 47 ohm resistor to the topper lead's data wire |
+| 4, 10, 13 (2OE, 3OE, 4OE) | ground |
+| 5, 9, 12 (2A, 3A, 4A) | ground, so the spare inputs don't float |
+| 6, 8, 11 (2Y, 3Y, 4Y) | nothing |
+| 7, GND | ground |
+| 14, VCC | 5 V from the buck, with a 0.1 uF capacitor to ground at the chip |
+
 ## Banks per prop
 
 All pixels are 12 V. MegaTree sizing uses 0.54 W per node at full white, the figure the
@@ -119,7 +140,7 @@ brightness of 32/255 is about 12%.
 | Prop | Pixels | Full white | Supplies | Banks | Brightness cap for the supplies | Box |
 | --- | --- | --- | --- | --- | --- | --- |
 | MegaTree | 32 x 200 = 6,400 | about 3,460 W | 4 x Mean Well LRS-350-12 | 4 x 8 outputs | 40% | 2 x Sterilite 80 qt Gasket Box |
-| Star topper | 90 | about 50 W | shares a tree supply | an RUEF500 on bank board 1 | none | in the tree box |
+| Star topper | 90 | about 50 W | shares a tree supply | an RUEF500 on bank board 1, data from a 74AHCT125 on the Pico board | none | in the tree box |
 | Arch group (each of 2) | up to about 270 | up to 150 W | 1 x LRS-150-12 (LRS-350-12 if bigger) | 1 small bank | none | 1 x Sterilite 8.5 gallon Gasket Tote |
 | Mini tree (each of 2) | 13 x 100 = 1,300 | about 325 W | 1 x LRS-350-12 | 8 + 5 outputs | none | 1 x Sterilite 80 qt Gasket Box |
 
@@ -177,4 +198,5 @@ drop = 2 x length in feet x amps x ohms per foot (18 AWG 0.0064, 16 AWG 0.0040, 
 - Arch-group box: [Sterilite 8.5 gallon Gasket Tote](https://www.sterilite.com/?p=21679)
 - Per-node current: [auschristmaslighting.com](https://auschristmaslighting.com/threads/reference-of-current-draws-of-common-rgb-lights-used.3812/)
 - Level shifter pinout: [TI SN74LVC8T245 datasheet](https://www.ti.com/lit/ds/symlink/sn74lvc8t245.pdf)
+- Topper buffer pinout: [TI SN74AHCT125 datasheet](https://www.ti.com/lit/ds/symlink/sn74ahct125.pdf)
 - Mini-tree pixels: [Wally's Lights 12 V WS2811 xConnect bullet pixel](https://wallyslights.com/products/12v-ws2811-xconnect-resistor-bullet-pixel?variant=39808961413278)
