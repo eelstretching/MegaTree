@@ -85,18 +85,19 @@ with the socket's triangle on the red stripe, so pin 1 lands on pin 1 at both en
 each new cable with a continuity tester. A clamp and two scraps of wood press a socket closed
 evenly; pliers close one end first.
 
-Every data line has a ground on the wire next to it:
+The data lines are on the even pins and ground and power on the odd pins, so every data wire runs
+between two ground or supply wires:
 
 | Pin | Signal | Pin | Signal |
 | --- | --- | --- | --- |
 | 1 | ground | 2 | data 1 |
-| 3 | data 2 | 4 | ground |
-| 5 | data 3 | 6 | data 4 |
-| 7 | ground | 8 | data 5 |
-| 9 | data 6 | 10 | ground |
-| 11 | data 7 | 12 | data 8 |
-| 13 | ground | 14 | 3.3 V |
-| 15 | 5 V | 16 | ground |
+| 3 | ground | 4 | data 2 |
+| 5 | ground | 6 | data 3 |
+| 7 | ground | 8 | data 4 |
+| 9 | ground | 10 | data 5 |
+| 11 | ground | 12 | data 6 |
+| 13 | 3.3 V | 14 | data 7 |
+| 15 | 5 V | 16 | data 8 |
 
 On the 2x8 header the odd pins are one row and the even pins the other.
 
