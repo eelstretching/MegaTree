@@ -1,6 +1,6 @@
 # Christmas 2026 plan
 
-Snapshot of the live plan doc as of 2026-10-13. The detail behind it is in
+Snapshot of the live plan doc as of 2026-10-14. The detail behind it is in
 [base-ring.md](base-ring.md) (the MegaTree base), [power.md](power.md) (banks, the ribbon, wire
 sizes) and [mini-trees.md](mini-trees.md) (mini tree structure).
 
@@ -55,8 +55,8 @@ Checkpoint: parts ordered and the MegaTree controller drawn on paper.
 
 - [ ] Weeknight: do the power budget for every prop (pixels x watts per pixel at your brightness cap) and pick the supplies
 - [ ] Weeknight: plan the base layout: the strands are fed from the bottom (0,0 is lower right), so the controller boxes sit by the pole and short leads run to the ring; only the star topper needs a 17 ft run up the pole
-- [ ] Weeknight: draw the bank board (level shifter, 47 ohm resistors, 3-pin terminals, ground bus) with its fuse block beside it, and the small Pico board; see [Power architecture](#power-architecture)
-- [ ] Weeknight: order fuses, fuse holders, enclosures, cable glands, wire and connectors (see the [parts checklist](#parts-checklist))
+- [ ] Weeknight: draw the bank board (level shifter, 47 ohm resistors, a PTC and 3-pin terminal per output, 12 V and ground buses) and the small Pico board, with a 74AHCT125 for the star topper's data; see [Power architecture](#power-architecture)
+- [ ] Weeknight: order PTC fuses, Sterilite gasket boxes, cable glands, wire and connectors (see the [parts checklist](#parts-checklist))
 - [ ] Weeknight (fun): review and merge PicoLEDs#10 (40 fps clock) so all props share one frame rate
 - [ ] Weekend: travel; nothing planned
 
@@ -66,7 +66,7 @@ Checkpoint: one MegaTree strand lit from the perfboard, through its fuse, off th
 
 - [ ] Weeknight: build the Pico board and the first bank board (8 outputs); flash a test pattern.
 - [ ] Weeknight: test the 8 outputs on the bench with one strand; scope or eyeball for flicker
-- [ ] Weeknight: wire the supply to the bank board and check the fuse block and ground bus temperatures with 8 strands on
+- [ ] Weeknight: wire the supply to the bank board and check the PTC, 12 V bus and ground bus temperatures with 8 strands on
 - [ ] Weekend: build the other 3 bank boards; test every output with one strand moved down the line
 - [ ] Weekend: test 8 strands at once at your brightness cap; check the supply, wire and fuse temperatures after 30 minutes
 - [ ] Weekend: decide power injection from that test (start of strand only, or start and end)
@@ -77,7 +77,7 @@ Checkpoint: the MegaTree controller and supply sealed in their enclosure, and th
 
 - [ ] Weeknight: mount the board and supply in the enclosure with glands, drip loops and strain relief
 - [ ] Weeknight: make up the data and power leads for the 32 strands and label every one
-- [ ] Weeknight: build the star topper output and run the WiringCheck from MegaTree#3 to find each ring's start node
+- [ ] Weeknight: build the star topper output (its 74AHCT125 on the Pico board, its RUEF500 and terminal on bank board 1) and run the WiringCheck from MegaTree#3 to find each ring's start node
 - [ ] Weeknight (fun): move MegaTree onto the 40 fps clock and pick the calm playlist
 - [ ] Sunday: cut and couple the 3/4 inch PEX half ring (20 ft), fit ball bungees and tension clips, test-fit on the lawn
 
@@ -194,34 +194,62 @@ ft of 1/2 inch PEX and one push-fit coupling, 4 landscape staples, 29 small ball
 ## Power architecture
 
 Every strand gets one 3-wire cable from one connector carrying fused 12 V, data and ground, the same
-output as the PCB design, with a blade fuse in place of the PCB's polyfuse: a 47 ohm resistor, a
-fuse and a 3-pin terminal per output. On perfboard those outputs live on a bank board, one per
-supply with 8 outputs and its own level shifter.
+output as the PCB design, with a through-hole PTC (resettable fuse) in place of the PCB's
+surface-mount polyfuse: a 47 ohm resistor, a PTC and a 3-pin terminal per output. On perfboard those
+outputs live on a bank board, one per supply with 8 outputs and its own level shifter.
 
-![One bank: supply, fuse block, bank board, and one output in detail](images/power-bank.svg)
+![One bank: a supply feeding a bank board with a PTC on every output, and one output in detail](images/power-bank.svg)
 
 - **Bank board.** Perfboard with the level shifter, a 47 ohm resistor on each data line, and 8
-  three-pin 5.08 mm screw terminals, one per strand. It carries data and ground; the 12 V for each
-  terminal comes from the fuse block beside it.
-- **Fuse block beside each bank board.** A blade fuse block with a negative bus (12-circuit for an
-  8-output bank, 6-circuit for a small one; DaierTek, or Blue Sea ST for the name brand), mounted
-  right next to the terminal row. Each 5 A fuse feeds its strand's +12 V terminal through a short 18
-  AWG jumper, so every strand still leaves on one 3-wire cable and nothing depends on a fuse holder
-  fitting perfboard. Spare circuits feed the 12 to 5 V buck and the star topper.
-- **Heavy current stays off the perfboard copper.** 12 AWG from the supply to the fuse block, and a
-  12 AWG solid ground bus along the back of the bank board tied to the block's negative bus. The
-  pads only ever carry one strand's current.
+  three-pin 5.08 mm screw terminals, one per strand. It carries 12 V as well as data and ground:
+  each terminal's +12 V comes from the board's 12 V bus through its own PTC.
+- **A PTC on each output.** A Littelfuse RUEF400 resettable fuse (4 A hold, 8 A trip, 30 V) sits in
+  series with each terminal's +12 V, its leads 0.2 inch apart in the perfboard grid. It is rated for
+  100 A of fault current; Bourns' similar MF-R400 is rated for only 40 A, less than an LRS-350's
+  150% peak of about 44 A. A tripped PTC stays open and warm until the fault is cleared and the
+  power is cycled. The star topper gets an RUEF500 (5 A hold) since it draws about 4.2 A at full
+  white, and every controller's first bank board carries one more PTC for the Pico board's buck.
+- **Heavy current stays off the perfboard copper.** 12 AWG runs from the supply to the board. A bare
+  12 AWG solid +12 V bus runs along the copper side, soldered to every PTC's input, and each PTC's
+  output links to its terminal's + pin. A 12 AWG solid ground bus runs along the top side with a
+  short leg down to each ground pin. The pads only ever carry one strand's current. Zip-tie the 12
+  AWG feed to the panel so it can't pull on the bus.
 - **Logic.** The Pico sits on its own small board with a 12 to 5 V buck, and reaches each bank board
   over a 16-pin ribbon: 8 data lines, 3.3 V for the level shifter's input side (from the Pico's 3V3
   pin), 5 V for its output side (from the buck), and 6 grounds, one beside each pair of data lines.
   The MegaTree has 4 banks, an arch group 1, and each mini tree 2 (8 + 5 outputs).
+- **The topper's data line.** The four level shifters' 32 channels all go to strands, so the star
+  topper's data gets a shifter of its own: a 74AHCT125, a through-hole quad buffer (DIP-14), on the
+  MegaTree's Pico board. It runs on the buck's 5 V and reads the Pico's 3.3 V as a clean high. Use
+  gate 1: the Pico's topper pin to 1A (pin 2), and 1Y (pin 3) out through a 47 ohm resistor. Give it
+  5 V on pin 14 and ground on pin 7, tie every enable pin (1, 4, 10, 13) and the spare inputs (5, 9,
+  12) to ground, and put a 0.1 uF capacitor from pin 14 to ground. A short 2-wire lead (data and
+  ground) takes the signal to the topper's 3-pin terminal on bank board 1, beside its RUEF500.
+- **Sockets.** The big parts go in sockets so a dead one swaps out without desoldering: the Pico,
+  the level shifter breakouts, the buck and the 74AHCT125.
 - **One ground, separate 12 V rails.** Tie every supply's negative and the Pico's ground together;
   never join two supplies' positives.
-- **Fuse size.** Size each fuse to the strand's wire, not its load: 5 A suits 18 AWG pigtails and
-  leads. A mini-tree strand draws 2.2 A at full white.
-- **Fit.** Lay one bank (supply, fuse block, bank board) out on paper at full size before buying
-  boxes; the tree may need more than 2 CG-1500s or one larger box.
-- **AC side.** Lever connectors under a cover, and the cord through a gland with strain relief.
+- **PTC size.** Size each PTC to the strand's wire, not its load. An RUEF400 is sure to trip by 8 A,
+  which 18 AWG pigtails and leads carry safely, and holds 4 A. A tree strand at the 40% cap draws
+  3.6 A, close to that hold once the box warms, so lower the cap if a strand trips; at your usual
+  12% it draws about 1.1 A. A mini-tree strand draws 2.2 A at full white.
+- **Fit.** The tree and mini-tree controllers go in Sterilite 80 qt Gasket Boxes (gasketed lid with
+  latches; 24 x 18 x 15.25 inches outside, 19 x 14-5/8 x 14-3/8 inches inside at the floor), lying
+  flat: two for the tree, joined by a 1-1/4 inch conduit link that carries ribbons 3-4 and the
+  ground tie, and one for each mini tree. A tree box holds two banks with the supplies standing on
+  edge beside the boards, with about 4 inches of width to spare; two supplies lying flat don't fit.
+  A mini tree needs only about 15 x 11.5 inches with its supply flat, so set its box behind the tree
+  on the house side, where the tree hides it from the street. An arch group needs about 12 x 10.5
+  inches and fits Sterilite's 8.5 gallon Gasket Tote (13-5/8 x 11 inches inside at the floor, 17.75
+  x 14.75 inches outside). Bud NBF-32032s (18.7 x 14.7 x 5.7 inches inside) are the hard-box
+  fallback. CG-1500s are too small, and the NBF-32046 has an 8-week lead time.
+- **Tote mounting.** Everything sits on a plywood backboard on the tote's floor, not screwed through
+  the walls. Cables come in through glands low on a flat stretch of side wall, with drip loops, and
+  never through the lid. Drill a weep hole in the lowest corner, set each tote on two pavers so it
+  never sits in water, and if you add a tarp, hold it clear of the tote so condensation can get out.
+- **AC side.** Lever connectors under a cover, and the cord through a gland with strain relief. An
+  LRS-350 draws up to 6.8 A from the wall at full load, so one cord feeds at most two of them; the
+  tree's two cords go on different circuits.
 
 ### Wire sizes
 
@@ -230,11 +258,11 @@ per foot (18 AWG 0.0064, 16 AWG 0.0040, 14 AWG 0.0025, 12 AWG 0.0016).
 
 | Run | Current | Wire | Why |
 | --- | --- | --- | --- |
-| Supply to fuse block, inside the box | up to 29 A (the LRS-350's limit) | 12 AWG, under 2 ft | carries the supply's full output with little heat |
-| Bank board ground bus | up to 29 A | 12 AWG solid | the same current, a few inches long |
-| Bank board to a strand | about 3.6 A for a MegaTree strand at 40%, 2.2 A for a mini-tree strand at full white | 18 AWG 3-wire (xConnect extensions) | 0.5 V drop at 4 A over 10 ft; fine for the tree's base and the mini trees |
+| Supply to bank board, inside the box | up to 29 A (the LRS-350's limit) | 12 AWG, under 2 ft | carries the supply's full output with little heat |
+| Bank board 12 V and ground buses | up to 29 A | 12 AWG solid | the same current, a few inches long |
+| Bank board to a strand | about 3.6 A for a MegaTree strand at 40%, 2.2 A for a mini-tree strand at full white | 18/3 round-jacket cable soldered to each tree strand; xConnect pigtails and extensions on the mini trees and arches | 0.5 V drop at 4 A over 10 ft; fine for the tree's base and the mini trees |
 | Long runs to the arches | about 3 A | 18 AWG up to about 25 ft, 16 AWG to about 40 ft | stays near 1 V of drop |
-| Power injection | only if the week 1 test shows color shift at the far end | 16 AWG pair on its own 5 A fuse | most strands at your brightness won't need it |
+| Power injection | only if the week 1 test shows color shift at the far end | 16 AWG pair on its own PTC | most strands at your brightness won't need it |
 
 ## Risks and cut lines
 
@@ -259,43 +287,45 @@ Order these in week 0 so nothing waits on shipping. Quantities assume 5 controll
 
 **Amazon, one order**
 
-- [ ] Blade fuse blocks with a negative bus: 6 x 12-way and 4 x 6-way (12-ways: 5 bought plus 2 from last year). [DaierTek](https://www.daierswitches.com/products/12-way-12v-24v-atc-ato-blade-fuse-block-holder-with-led-indicator) works (M5 studs take #10 rings, M4 circuit screws take #8; check the 6-way has a negative bus), or Blue Sea for the name brand: [12-circuit 5026](https://www.amazon.com/Blue-Sea-Systems-Blade-Block/dp/B001P6FTHC) and [6-circuit 5025](https://www.amazon.com/Blue-Sea-Systems-5025-Block/dp/B00KOEK0NE)
-- [ ] 5 A ATO/ATC blade fuses: a [100-pack](https://www.amazon.com/clp/B07WS16MF9), or [Bussmann ATC-5](https://www.amazon.com/clp/B01MXE2PHR) for a name brand
+- [ ] Return the DaierTek blade fuse blocks if Amazon will take them back: the PTCs on the bank boards replace them, so no blade fuses are needed either
 - [ ] 12 to 5 V buck converters x6: buying two packs of the [AKEYSRC 6-pack](https://www.amazon.com/dp/B0GYJDP96Q) (5-30 V in, fixed 5 V, 3 A); check each one's output with a meter before soldering it in
 - [ ] 16-pin (2x8) IDC sockets, about 25 (a [50-pack](https://www.amazon.com/PC-Accessories-Connectors-50-Pack-Connector/dp/B00E57QQVG) leaves spares for mistakes), about 20 shrouded 2x8 through-hole box headers (0.1 inch, keyed), such as [uxcell, 24 pieces](https://www.amazon.com/uxcell-16-Pin-Straight-Connector-Sockets/dp/B010V43ACO) or [XINYIYUAN, 30 pieces](https://www.amazon.com/XINYIYUAN-16-Pin-Straight-Connector-Sockets/dp/B08NB8S42K), and 16-wire ribbon
-- [ ] Perfboard, at least 10 x 15 cm per bank board, for about 10 bank boards and 6 Pico boards
+- [ ] Perfboard, at least 10 x 15 cm per bank board, for about 10 bank boards and 6 Pico boards. The non-AliExpress boards on hand take the 5.08 mm screw terminals as is; the AliExpress ones have holes too small
 - [ ] 47 ohm resistors, about 75, if your stash is short
-- [ ] Cable glands, about 70: one per strand pigtail and one per AC cord, with a cable range that covers the pigtail's jacket (a [PG7 to PG19 kit](https://www.amazon.com/AMPELE-Plastic-Waterproof-Connectors-Gaskets/dp/B08TCDZ8LN) or 1/2 inch NPT)
+- [ ] Cable glands, about 70: one per strand lead and one per AC cord, with a cable range that covers each lead's jacket (measure the tree's 18/3 round cable and a pigtail before buying) (a [PG7 to PG19 kit](https://www.amazon.com/AMPELE-Plastic-Waterproof-Connectors-Gaskets/dp/B08TCDZ8LN) or 1/2 inch NPT)
 - [ ] [Wago 221 lever nut assortment](https://www.amazon.com/Compact-Splicing-Connector-Assortment-221-2401/dp/B0BN6MBR7X) for the AC side
 - [ ] [4 inch ball bungees, 100-pack](https://www.amazon.com/clp/B001BNS5P2) (58 for the mini trees, 32 for the MegaTree), plus about 30 ft of UV-resistant paracord for the mini trees' back guys
 - [ ] [UV-resistant 8 inch black zip ties, 1000](https://www.amazon.com/Resistant-Self-Locking-Plastic-Indoor-Outdoor/dp/B09WVNDV7Y)
 - [ ] [Permatex dielectric grease](https://www.amazon.com/s?k=Permatex+22058), the 3 oz tube (22058), since a 0.33 oz tube won't cover about 70 outdoor joints, and an [adhesive-lined heat shrink kit](https://www.amazon.com/270-pcs-Adhesive-Assortment-MILAPEAK/dp/B0771K1Z7Q)
-- [ ] Crimp consumables only (both crimpers already on hand): about 250 ferrules for every stranded wire into a bank-board screw terminal (all three wires of each pigtail, and the fuse jumpers), and insulated ring and fork terminals for the fuse block and supplies: #8 for the fuse block's circuit screws, #10 rings for its bus studs, and forks for the supplies' screw terminals
-- [ ] 18 AWG stranded hookup wire, about 50 ft of red and 25 ft of black, for the fuse jumpers and buck feeds; 16 AWG 3-wire only if an arch sits more than 25 ft from its box
+- [ ] Crimp consumables only (both crimpers already on hand): about 250 ferrules for every stranded wire into a bank-board screw terminal (all three wires of each strand lead), and insulated #6 fork terminals for the supplies' M3 screw terminals: 12-10 AWG for the 12 AWG feeds and 16-14 AWG for the AC wiring. Try one on a real LRS-350 terminal before buying many
+- [ ] 18 AWG stranded hookup wire, about 25 ft each of red and black, for the buck feeds; 16 AWG 3-wire only if an arch sits more than 25 ft from its box
+- [ ] Sterilite 80 qt Gasket Boxes, a 4-pack for the tree and the mini trees, and 2 Sterilite 8.5 gallon Gasket Totes for the arch groups
 
 These links came from search; Amazon won't let me open its pages, so check the price and reviews on
 each before buying.
 
 **Digi-Key, added to the order you already have**
 
-- [ ] Mean Well LRS-350-12 x7 (4 tree, 2 mini trees, 1 spare) and LRS-150-12 x2 (arches); all pixels are 12 V. Bravo Electro is about $275 for the same set if Digi-Key costs more. Not from Amazon: knockoffs turn up there.
-- [ ] Nothing else; the fuse blocks come from Amazon
+- [ ] Ordered from Bravo Electro on Oct 12: Mean Well LRS-350-12 x7 (4 tree, 2 mini trees, 1 spare) and LRS-150-12 x2 (arches); all pixels are 12 V. Bravo Electro is about $275 for the same set if Digi-Key costs more. Not from Amazon: knockoffs turn up there.
+- [x] Littelfuse RUEF400 resettable fuses x100 (about 70 needed: 34 for the tree, 28 for the mini trees, 6-8 for the arches) and RUEF500 x2 for the star topper
+- [ ] Nothing else: the enclosures are on the Amazon list
 
 **A pixel shop (Wally's Lights or Holiday Coro)**
 
-- [ ] CableGuard CG-1500 enclosures x6 (2 tree, 1 per other prop)
-- [ ] xConnect pigtails with one bare end, one per strand (about 70): the bare end goes into the bank board's screw terminal, so there's no soldering; plus plug-in extension leads where a strand is far from its box
+- [ ] xConnect pigtails with one bare end, only if last year's leftovers fall short: the mini trees and arches need about 35, and last year's extension leads cover the runs. Count what's on hand first. The bare end goes into the bank board's screw terminal. The MegaTree's strands get soldered 18/3 leads instead (Home Depot list)
 
 **Home Depot**
 
 - [ ] Mini trees: 2 x 3/4 inch black pipe 48 inch threaded, 2 x 3/4 inch floor flanges, 1/2 inch rebar for two 3 ft stakes, 2 x 10 ft 1/2 inch PEX, 2 x 1/2 inch push-fit couplings, 8 landscape staples, exterior paint or spar urethane
 - [ ] MegaTree base, if not bought yet: 20 ft of 3/4 inch PEX-B, 4 x 3/4 inch push-fit couplings, 8 rebar J-stakes
-- [ ] 12 AWG: about 10 ft bare solid for the bank-board buses, and stranded red and black for the supply feeds
+- [ ] 12 AWG: about 15 ft bare solid for each bank board's 12 V and ground buses, and stranded red and black for the supply feeds
+- [ ] MegaTree strand leads: NAOEVO 18 AWG 3-conductor cable, 400 ft bought (two 200 ft spools). About 260 ft is needed: 32 leads of about 7.5 ft from the strand end to the terminal, plus the topper's 17 ft run. Check that the jacket is round, so the glands seal on it, and size the glands to its outside diameter. Cut one lead to fit on the lawn before cutting the rest. Solder each lead to its strand, seal the joint with adhesive-lined heat shrink, and label both ends
+- [ ] Tote backboards: a 4 x 4 ft sheet of 1/2 inch exterior plywood, cut to each tote's floor, and about 12 pavers to lift six totes off the ground (the patio leftovers may cover some)
 - [ ] Stakes and hardware for the arches
 
 **Already on hand or ordered:** Pico 2 W x6 (2 + 4 ordered), level shifters x48 (4 + 44 coming; 11
-needed), TSSOP breakouts, screw terminals (more ordered), a ferrule crimper and a ratcheting crimper
-for insulated terminals.
+needed), 74AHCT125s for the topper, TSSOP breakouts, screw terminals (more ordered), a ferrule
+crimper and a ratcheting crimper for insulated terminals.
 
 The base design is in [base-ring.md](base-ring.md), with [power.md](power.md) and
 [mini-trees.md](mini-trees.md) beside it.
@@ -308,14 +338,15 @@ Holiday Coro nodes. Calm effects sit far below that; your old MegaTree brightnes
 
 | Prop | Pixels | Full white | Supplies | Brightness cap for the supplies | Box |
 | --- | --- | --- | --- | --- | --- |
-| MegaTree | 6,400 | about 3,460 W | 4 x LRS-350-12, one per 8-strand level-shifter group | 40% of full white | 2 x CG-1500 (board + 2 supplies, 2 supplies) |
+| MegaTree | 6,400 | about 3,460 W | 4 x LRS-350-12, one per 8-strand level-shifter group | 40% of full white | 2 x Sterilite 80 qt Gasket Box, supplies on edge |
 | Star topper | 90 | about 50 W | shares a tree supply | none needed | in the tree box |
-| Arch group (each of 2) | up to about 270 | up to 150 W | 1 x LRS-150-12 (LRS-350-12 if the group is bigger) | none up to 270 px | 1 x CG-1500 |
-| Mini tree (each of 2) | 1,300 (13 x 100) | about 325 W (0.25 W per pixel, per Wally's) | 1 x LRS-350-12 | none needed | 1 x CG-1500 |
+| Arch group (each of 2) | up to about 270 | up to 150 W | 1 x LRS-150-12 (LRS-350-12 if the group is bigger) | none up to 270 px | 1 x Sterilite 8.5 gallon Gasket Tote |
+| Mini tree (each of 2) | 1,300 (13 x 100) | about 325 W (0.25 W per pixel, per Wally's) | 1 x LRS-350-12 | none needed | 1 x Sterilite 80 qt Gasket Box |
 
 The LRS supplies are not waterproof, so they live inside the box, mounted with cables entering from
 the bottom and drip loops. Check the LRS-350's 115/230 V input switch before first power-up. Prices
 are from [Bravo Electro LRS-350-12](https://www.bravoelectro.com/lrs-350-12.html) ($33.30) and
 [LRS-150-12](https://www.bravoelectro.com/lrs-150-12.html) ($20.30); box sizes from [Pierce Lights'
-enclosure page](https://www.piercelights.com/tech/enclosures); the per-node figure from
+enclosure page](https://www.piercelights.com/tech/enclosures) and Bud's NBF listings; the per-node
+figure from
 [auschristmaslighting.com](https://auschristmaslighting.com/threads/reference-of-current-draws-of-common-rgb-lights-used.3812/).
