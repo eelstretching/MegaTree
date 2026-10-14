@@ -31,6 +31,8 @@ shifter.
   topper's data gets a shifter of its own on the MegaTree's Pico board (see
   [the topper's buffer](#the-toppers-buffer) below). A short 2-wire lead (data and ground) takes
   the signal to the topper's 3-pin terminal on bank board 1, beside its RUEF500.
+- **Sockets.** The big parts go in sockets so a dead one swaps out without desoldering: the Pico,
+  the level shifter breakouts, the buck and the 74AHCT125.
 - **One ground, separate 12 V rails.** Tie every supply's negative and the Pico's ground
   together; never join two supplies' positives.
 - **PTC size.** Size each PTC to the strand's wire, not its load. An RUEF400 is sure to trip by
@@ -116,7 +118,7 @@ chip.
 ### The topper's buffer
 
 The topper's data comes from a 74AHCT125, a through-hole quad buffer (DIP-14, TI's SN74AHCT125N
-or Adafruit's product 1787), on the MegaTree's Pico board. It runs on the buck's 5 V, and its
+or Adafruit's product 1787), in a socket on the MegaTree's Pico board. It runs on the buck's 5 V, and its
 TTL-level inputs read the Pico's 3.3 V as a clean high. Only gate 1 is used:
 
 | Buffer pin | Connect to |
