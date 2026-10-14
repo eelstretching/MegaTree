@@ -48,7 +48,7 @@ A 20 inch hub would also clear the fold, but it leaves a flat, wide top on a 36 
    bungee at the hoop end. Tension the guys until the pole stands plumb; every column leaning
    evenly is the check.
 6. **Feed.** Each strand's pixel 1 is at the bottom of every other column. Run 13 leads from the
-   controller box at the pole base.
+   controller box, which sits behind the tree on the house side.
 
 ## Optional crown
 
@@ -62,8 +62,7 @@ pigtail.
 - At 0.25 W per pixel, 1,300 pixels is about 325 W at full white, so one Mean Well LRS-350-12 per
   tree runs it at full brightness. Each strand draws about 2.2 A.
 - 13 outputs of 100 pixels make two banks per tree (8 + 5 outputs), each with its own level
-  shifter; see [power.md](power.md). If the two trees stand within about 10 ft of each other, one
-  Pico can drive both trees' banks.
+  shifter; see [power.md](power.md). Each tree gets its own Pico.
 - The canvas is 26 x 50 with serpentine columns, so the MegaTree effects carry over.
 
 ## Parts per tree
