@@ -1,6 +1,7 @@
 #include <stdlib.h>
 
 #include "ArchAnimator.h"
+#include "ArchFire.h"
 #include "ArchRise.h"
 #include "ArchSet.h"
 #include "ArrayColorMap.h"
@@ -17,7 +18,7 @@
 #define PIXELS_PER_ARCH 80
 #define ARCHES_PER_STRIP 3
 #define BRIGHTNESS 32
-#define FPS 30
+#define FPS 40
 
 int main() {
     stdio_init_all();
@@ -45,11 +46,11 @@ int main() {
     ArchAnimator animator(&arches, FPS);
     animator.setShuffle(true);
 
-    Leap leap(&arches, &xmasColors, 2, rgColors, 12, 2);
+    Leap leap(&arches, &xmasColors, 2, rgColors, 12, 60);
     leap.setName("Leap");
     animator.addTimed(&leap, 20000);
 
-    Leap fastLeap(&arches, &xmasColors, 5, rgbwgColors, 20, 4);
+    Leap fastLeap(&arches, &xmasColors, 5, rgbwgColors, 20, 120);
     fastLeap.setName("FastLeap");
     animator.addTimed(&fastLeap, 15000);
 
@@ -57,7 +58,7 @@ int main() {
     rise.setName("Rise");
     animator.addTimed(&rise, 20000);
 
-    ArchRise riseTogether(&arches, &xmasColors, 2, rgColors, true, 45);
+    ArchRise riseTogether(&arches, &xmasColors, 2, rgColors, true, 1500);
     riseTogether.setName("RiseTogether");
     animator.addTimed(&riseTogether, 15000);
 
@@ -77,9 +78,13 @@ int main() {
     cylon.setName("Cylon");
     animator.addTimed(&cylon, 20000);
 
-    Cylon cylons(&arches, RGB::Red, 4, 2, 160, true);
+    Cylon cylons(&arches, RGB::Red, 4, 60, 160, true);
     cylons.setName("Cylons");
     animator.addTimed(&cylons, 20000);
+
+    ArchFire fire(&arches);
+    fire.setName("Fire");
+    animator.addTimed(&fire, 60000);
 
     animator.init();
 
