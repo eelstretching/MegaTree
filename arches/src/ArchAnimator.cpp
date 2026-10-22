@@ -20,8 +20,8 @@ void ArchAnimator::addTimed(Archimation* a, int durationMS) {
 }
 
 void ArchAnimator::setFPS(int fps) {
-    this->fps = fps;
-    usPerFrame = 1e6 / fps;
+    this->fps = fps > 0 ? fps : kDefaultFPS;
+    usPerFrame = 1000000 / this->fps;
 }
 
 void ArchAnimator::init() {
@@ -30,8 +30,30 @@ void ArchAnimator::init() {
         return;
     }
     archimationChanged();
-    archimations[pos]->init();
-    setFPS(archimations[pos]->getFPS());
+    uint64_t now = clockUs();
+    startArchimation(archimations[pos], now - now % usPerFrame);
+}
+
+void ArchAnimator::startArchimation(Archimation* a, uint64_t at) {
+    a->startClock(at);
+    a->init();
+    //
+    // Owed exactly one step on its first frame.
+    int sfps = a->getFPS();
+    uint32_t period = sfps > 0 ? 1000000 / sfps : 0;
+    stepOwedUs = period > usPerFrame ? period - usPerFrame : 0;
+}
+
+int ArchAnimator::stepsDue(Archimation* a) {
+    int sfps = a->getFPS();
+    if (sfps <= 0) {
+        return 1;
+    }
+    uint32_t period = 1000000 / sfps;
+    stepOwedUs += usPerFrame;
+    int n = stepOwedUs / period;
+    stepOwedUs -= n * period;
+    return n > kMaxStepsPerFrame ? kMaxStepsPerFrame : n;
 }
 
 void ArchAnimator::archimationChanged() {
@@ -47,13 +69,22 @@ bool ArchAnimator::step() {
     if (archimations.empty()) {
         return false;
     }
+    uint64_t now = clockUs();
+    frameTime = now - now % usPerFrame;
+
     frameWatch.start();
     stepWatch.start();
     bool changed = false;
-    if (!archimations[pos]->step()) {
-        archimations[pos]->finish();
-        pos = (pos + 1) % archimations.size();
-        changed = true;
+    Archimation* a = archimations[pos];
+    int n = stepsDue(a);
+    for (int i = 0; i < n; i++) {
+        a->setFrameTime(frameTime);
+        if (!a->step()) {
+            a->finish();
+            pos = (pos + 1) % archimations.size();
+            changed = true;
+            break;
+        }
     }
     stepWatch.finish();
     showWatch.start();
@@ -64,19 +95,48 @@ bool ArchAnimator::step() {
 
     //
     // Done after the show to avoid a flash from the next archimation's init().
+    // The new archimation's first step is on the next frame.
     if (changed) {
         archimationChanged();
-        archimations[pos]->init();
-        setFPS(archimations[pos]->getFPS());
+        startArchimation(archimations[pos], frameTime + usPerFrame);
     }
 
-    uint64_t lus = frameWatch.getLastTime();
-    if (lus < usPerFrame) {
-        sleep_us(usPerFrame - lus);
-    } else {
-        missedFrames++;
-    }
+    waitForNextFrame();
     return true;
+}
+
+void ArchAnimator::waitForNextFrame() {
+    uint64_t next = frameTime + usPerFrame;
+    uint64_t now = clockUs();
+    if (now >= next) {
+        //
+        // Late. The next step() starts right away, on the frame we're in now.
+        missedFrames++;
+        return;
+    }
+    if (next - now > usPerFrame) {
+        //
+        // The clock jumped backwards (a shared clock stepping to correct
+        // itself). Line up with the new clock's next frame.
+        next = now - now % usPerFrame + usPerFrame;
+    }
+    //
+    // If we're dithering, spend the time until the next frame re-sending this
+    // one, since it's the average over sends that gets the in-between levels
+    // right. Stop when another send wouldn't finish before the next frame.
+    if (arches->getRenderer()->getDithering()) {
+        uint64_t last = 0;
+        while (now + last < next) {
+            arches->show();
+            uint64_t after = clockUs();
+            last = after - now;
+            now = after;
+        }
+    }
+    now = clockUs();
+    if (now < next) {
+        sleep_us(next - now);
+    }
 }
 
 void ArchAnimator::printStats() {

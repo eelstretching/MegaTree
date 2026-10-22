@@ -44,6 +44,12 @@ path at configure time if they live elsewhere.
   `init()` and `step()`. `MultiArchimation` and `TimedArchimation` match
   their PicoLEDs namesakes, and `ArchAnimator` runs a list of them like
   `Animator`/`RandomAnimator` (`setShuffle(true)` for random order).
+  Like PicoLEDs' `Animator`, `ArchAnimator` draws at one fixed show rate (40
+  fps by default) on frame boundaries of `clockUs()`, which a subclass can
+  point at PicoComm's shared show clock. Archimations go by the clock
+  (`getFPS()` 0, moving by `getFrameUs()`/`elapsedUs()`), so speeds and holds
+  are given per second or in milliseconds and look the same at any frame
+  rate. One with a non-zero `getFPS()` is stepped that many times a second.
 - Starter Archimations: `Leap` (a ball with a fading tail runs up and
   over each arch in turn), `ArchRise` (arches fill from both feet to the
   apex, one by one or all together), `FillWipe` (arches fill from the feet
