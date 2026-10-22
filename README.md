@@ -54,8 +54,10 @@ path at configure time if they live elsewhere.
   over each arch in turn), `ArchRise` (arches fill from both feet to the
   apex, one by one or all together), `FillWipe` (arches fill from the feet
   with a set of colors, then black shifts in from the left foot, the right
-  foot or the apex to clear them) and `Cylon` (a red eye with a fading
-  trail sweeps foot to foot and back on every arch, 1978 style).
+  foot or the apex to clear them), `Cylon` (a red eye with a fading
+  trail sweeps foot to foot and back on every arch, 1978 style) and
+  `ArchFire` (a cozy hearth: flames flicker up both legs from the feet, and
+  the fire now and then crackles and throws an ember that drifts up the leg).
 
 The `LeapingArches` program runs them on three 80-pixel arches on GPIO10.
 

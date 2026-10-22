@@ -1,6 +1,7 @@
 #include <stdlib.h>
 
 #include "ArchAnimator.h"
+#include "ArchFire.h"
 #include "ArchRise.h"
 #include "ArchSet.h"
 #include "ArrayColorMap.h"
@@ -80,6 +81,10 @@ int main() {
     Cylon cylons(&arches, RGB::Red, 4, 60, 160, true);
     cylons.setName("Cylons");
     animator.addTimed(&cylons, 20000);
+
+    ArchFire fire(&arches);
+    fire.setName("Fire");
+    animator.addTimed(&fire, 60000);
 
     animator.init();
 
