@@ -4,13 +4,16 @@
 #include "math8.h"
 
 ArchFire::ArchFire(ArchSet* arches, uint8_t cooling, uint8_t sparking,
-                   uint emberRate, uint simRate, uint8_t maxHeat)
+                   uint emberRate, uint simRate, uint8_t maxHeat,
+                   uint8_t emberMinSpeed, uint8_t emberMaxSpeed)
     : Archimation(arches, nullptr, 0),
       cooling(cooling),
       sparking(sparking),
       simRate(simRate > 0 ? simRate : 30),
       emberRate(emberRate),
-      maxHeat(maxHeat) {}
+      maxHeat(maxHeat),
+      emberMinSpeed(MAX(emberMinSpeed, 1)),
+      emberMaxSpeed(MAX(emberMaxSpeed, MAX(emberMinSpeed, 1))) {}
 
 void ArchFire::init() {
     //
@@ -92,7 +95,8 @@ bool ArchFire::step() {
                 Ember e;
                 e.leg = random16() % numLegs;
                 e.pos = (legLength / 4 + random8(legLength / 4 + 1)) * 256;
-                e.speed = random8(6, 14);
+                e.speed = emberMinSpeed +
+                          random16(emberMaxSpeed - emberMinSpeed + 1);
                 e.heat = random8(180, 255);
                 embers.push_back(e);
                 //

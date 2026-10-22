@@ -45,6 +45,11 @@ class ArchFire : public Archimation {
     /// @brief The hottest heat we show, so the fire stays orange and yellow.
     uint8_t maxHeat;
 
+    /// @brief The slowest and fastest an ember drifts up, in pixels per
+    /// second. Each ember picks a speed in between.
+    uint8_t emberMinSpeed;
+    uint8_t emberMaxSpeed;
+
     /// @brief Heat per pixel, legLength pixels for each leg, feet first.
     std::vector<uint8_t> heat;
 
@@ -76,8 +81,11 @@ class ArchFire : public Archimation {
     /// @param emberRate about how many embers a second the whole fire throws
     /// @param simRate how many simulation steps a second
     /// @param maxHeat the hottest heat shown, 0-255 (191 tops out at yellow)
+    /// @param emberMinSpeed the slowest an ember drifts up, in pixels a second
+    /// @param emberMaxSpeed the fastest an ember drifts up, in pixels a second
     ArchFire(ArchSet* arches, uint8_t cooling = 95, uint8_t sparking = 110,
-             uint emberRate = 3, uint simRate = 30, uint8_t maxHeat = 200);
+             uint emberRate = 3, uint simRate = 30, uint8_t maxHeat = 200,
+             uint8_t emberMinSpeed = 6, uint8_t emberMaxSpeed = 14);
 
     void init() override;
     bool step() override;
