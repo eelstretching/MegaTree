@@ -13,9 +13,9 @@
 ///
 /// Seen from the street, the colors should go red, green, blue from the
 /// left, every white foot should be on the left, and every dot should run
-/// left to right. If an arch's white foot is on the right, flip the reversed
-/// flag for its strip in ArchSet::add(). If the colors are out of order, add
-/// the strips in a different order.
+/// left to right. If an arch's white foot is on the right, swap the ArchFeed
+/// for its strip in ArchSet::add(). If the colors are out of order, add the
+/// strips in a different order.
 class ArchWiringCheck : public Archimation {
    protected:
     /// @brief How many pixels the dots move each second.

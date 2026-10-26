@@ -34,16 +34,17 @@ path at configure time if they live elsewhere.
 
 - `Arch` is one arch: a segment of a `Strip`. Several arches wired end to end
   share one strip, so with 80-pixel arches, arch 0 is pixels 0-79, arch 1 is
-  80-159, and so on. Positions are in show order: pixel 0 is the foot the
-  show starts from (the left foot, seen from the street), whichever end the
-  data comes in at. A reversed arch is fed from its far foot.
+  80-159, and so on. Positions are in show order: pixel 0 is the left foot,
+  seen from the street, whichever foot the data comes in at (`ArchFeed`).
 - `ArchSet` holds all the arches (every arch the same length) and renders
   them, the way `Canvas` does for the tree. It carves each strip you `add()`
   into arches and also numbers every pixel across all arches, for effects that
   travel from one arch to the next. Arches go in the show in the order their
-  strips are added, whatever their pins. `add(strip, true)` adds a strip fed
-  from the show's far end: each arch on it is reversed and, with several
-  arches on the strip, they're taken from the far end of the wire first.
+  strips are added, whatever their pins, and `add(strip, feed)` says which
+  end each strip is fed from: `ArchFeed::LEFT_FOOT` or
+  `ArchFeed::RIGHT_FOOT`. Fed from the right, each arch on the strip is
+  flipped and, with several arches on it, they're taken from the far end of
+  the wire first.
 - `Archimation` is the 1D counterpart of PicoLEDs' `Animation`: override
   `init()` and `step()`. `MultiArchimation` and `TimedArchimation` match
   their PicoLEDs namesakes, and `ArchAnimator` runs a list of them like

@@ -18,8 +18,8 @@
 // on the bank board ribbon are GP2-GP4.
 //
 // The arches are listed in show order, left to right as seen from the street.
-// An arch whose data lead comes in at its right foot is reversed: with the
-// controller in the middle, that's the left arch. Run with ARCH_WIRING_CHECK
+// Each says which foot its data lead comes in at: with the controller in the
+// middle, the left arch is fed at its right foot. Run with ARCH_WIRING_CHECK
 // set to 1 to check the order and directions in the yard (see
 // ArchWiringCheck.h).
 #define PIXELS_PER_ARCH 80
@@ -29,13 +29,13 @@
 
 struct ArchWiring {
     uint pin;
-    bool reversed;
+    ArchFeed feed;
 };
 
 static const ArchWiring archWiring[] = {
-    {2, true},   // Left arch: fed from its right foot, nearest the controller.
-    {3, false},  // Middle arch: fed from its left foot.
-    {4, false},  // Right arch: fed from its left foot.
+    {2, ArchFeed::RIGHT_FOOT},  // Left arch: right foot is nearest the box.
+    {3, ArchFeed::LEFT_FOOT},   // Middle arch.
+    {4, ArchFeed::LEFT_FOOT},   // Right arch.
 };
 
 #define NUM_ARCHES (sizeof(archWiring) / sizeof(archWiring[0]))
@@ -48,7 +48,7 @@ int main() {
     for (uint i = 0; i < NUM_ARCHES; i++) {
         strips[i] = new Strip(archWiring[i].pin, PIXELS_PER_ARCH);
         strips[i]->setColorOrder(ColorOrder::ORGB);
-        arches.add(strips[i], archWiring[i].reversed);
+        arches.add(strips[i], archWiring[i].feed);
     }
     arches.setup();
     arches.clear();
