@@ -17,6 +17,10 @@
 /// as many arches as fit on it, and arches are numbered in the order they were
 /// added, so arch 0 is the first arch on the first strip.
 ///
+/// Arches go left to right in the show in the order they're added, whatever
+/// pins their strips are on, so add strips in show order. A strip fed from
+/// the show's far end is added reversed (see add()).
+///
 /// The set also numbers every pixel in every arch from 0 to getNumPixels() - 1
 /// in that same order, which treats the whole display as one long run that
 /// animations can send things along.
@@ -42,9 +46,17 @@ class ArchSet {
     /// @brief Adds a strip of arches wired end to end. The strip is carved
     /// into getNumPixels() / pixelsPerArch arches. Any pixels left over at the
     /// end of the strip aren't part of an arch.
+    ///
+    /// A reversed strip is fed from the show's far end: its data wire comes
+    /// in at the last arch's far foot and runs back towards the first arch.
+    /// The arches on it are added in show order (the one at the far end of
+    /// the wire first) and each is reversed, so animations run the same way
+    /// as on a strip fed from the start. With one arch per strip, this just
+    /// means the arch is fed from its far foot.
     /// @param strip the strip to add
+    /// @param reversed true if data enters the strip at the show's far end
     /// @return how many arches were made from the strip
-    uint add(Strip* strip);
+    uint add(Strip* strip, bool reversed = false);
 
     /// @brief Set up for rendering, after all strips have been added.
     void setup() { renderer.setup(); }

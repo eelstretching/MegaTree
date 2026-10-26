@@ -34,12 +34,16 @@ path at configure time if they live elsewhere.
 
 - `Arch` is one arch: a segment of a `Strip`. Several arches wired end to end
   share one strip, so with 80-pixel arches, arch 0 is pixels 0-79, arch 1 is
-  80-159, and so on. Pixel 0 is the foot where data enters; `setReversed()`
-  flips an arch hung the other way round.
+  80-159, and so on. Positions are in show order: pixel 0 is the foot the
+  show starts from (the left foot, seen from the street), whichever end the
+  data comes in at. A reversed arch is fed from its far foot.
 - `ArchSet` holds all the arches (every arch the same length) and renders
   them, the way `Canvas` does for the tree. It carves each strip you `add()`
   into arches and also numbers every pixel across all arches, for effects that
-  travel from one arch to the next.
+  travel from one arch to the next. Arches go in the show in the order their
+  strips are added, whatever their pins. `add(strip, true)` adds a strip fed
+  from the show's far end: each arch on it is reversed and, with several
+  arches on the strip, they're taken from the far end of the wire first.
 - `Archimation` is the 1D counterpart of PicoLEDs' `Animation`: override
   `init()` and `step()`. `MultiArchimation` and `TimedArchimation` match
   their PicoLEDs namesakes, and `ArchAnimator` runs a list of them like
@@ -58,8 +62,15 @@ path at configure time if they live elsewhere.
   trail sweeps foot to foot and back on every arch, 1978 style) and
   `ArchFire` (a cozy hearth: flames flicker up both legs from the feet, and
   the fire now and then crackles and throws an ember that drifts up the leg).
+- `ArchWiringCheck` is for setting up: each arch glows red, green or blue
+  for its place in the show, its show-start foot is white, and a dot runs
+  from that foot to the other. From the street the colors should run red,
+  green, blue from the left with every white foot on the left.
 
-The `LeapingArches` program runs them on three 80-pixel arches on GPIO10.
+The `LeapingArches` program runs them on a group of three 80-pixel arches with
+the controller in the middle and one output per arch (GP2-GP4, the left arch
+fed from its right foot). Edit the `archWiring` table at the top to match how
+a group is wired, and set `ARCH_WIRING_CHECK` to 1 to check it in the yard.
 
 ## Star topper
 

@@ -11,12 +11,18 @@ ArchSet::~ArchSet() {
     }
 }
 
-uint ArchSet::add(Strip* strip) {
+uint ArchSet::add(Strip* strip, bool reversed) {
     strips.push_back(strip);
     renderer.add(strip);
     uint n = strip->getNumPixels() / pixelsPerArch;
     for (uint i = 0; i < n; i++) {
-        arches.push_back(new Arch(strip, i * pixelsPerArch, pixelsPerArch));
+        //
+        // On a reversed strip the first arch in the show is the last one on
+        // the wire.
+        uint segment = reversed ? n - 1 - i : i;
+        Arch* arch = new Arch(strip, segment * pixelsPerArch, pixelsPerArch);
+        arch->setReversed(reversed);
+        arches.push_back(arch);
     }
     if (n * pixelsPerArch != strip->getNumPixels()) {
         printf("Strip on pin %d has %d pixels left over after %d arches\n",

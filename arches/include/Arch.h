@@ -11,9 +11,15 @@
 /// arches wired end to end share one strip (and so one controller output),
 /// with each Arch looking after its own segment.
 ///
-/// Pixel 0 is the foot where data enters the arch and pixel getNumPixels() - 1
-/// is the other foot. Positions outside the arch are ignored on set and read
-/// as black on get, so animations can draw past the ends without checking.
+/// Positions in an arch are in show order, not wiring order: pixel 0 is the
+/// foot the show starts from (say the left foot, seen from the street) and
+/// pixel getNumPixels() - 1 is the other foot, whichever end the data wire
+/// comes in at. Normally data enters at pixel 0. A reversed arch is fed from
+/// its far foot instead, which is handy when the controller sits to the
+/// arch's right; animations draw the same either way.
+///
+/// Positions outside the arch are ignored on set and read as black on get,
+/// so animations can draw past the ends without checking.
 class Arch {
    protected:
     /// @brief The strip holding this arch's pixels.
@@ -25,8 +31,8 @@ class Arch {
     /// @brief How many pixels are in this arch.
     uint numPixels;
 
-    /// @brief If true, pixel 0 is at the far end of the segment, for an arch
-    /// that was hung the other way round.
+    /// @brief If true, the data wire comes in at the show's far foot, so
+    /// pixel 0 is at the end of the segment on the strip.
     bool reversed = false;
 
     /// @brief Maps a position in the arch to a position on the strip.
@@ -51,6 +57,9 @@ class Arch {
     /// @brief Gets the position of the top of the arch.
     uint getApex() { return numPixels / 2; }
 
+    /// @brief Says which end of the arch the data wire comes in at.
+    /// @param reversed true if data enters at the show's far foot (pixel
+    /// getNumPixels() - 1), false if it enters at pixel 0
     void setReversed(bool reversed) { this->reversed = reversed; }
 
     bool isReversed() { return reversed; }
