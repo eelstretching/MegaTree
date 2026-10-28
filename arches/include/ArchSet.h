@@ -17,6 +17,10 @@
 /// as many arches as fit on it, and arches are numbered in the order they were
 /// added, so arch 0 is the first arch on the first strip.
 ///
+/// Arches go left to right in the show in the order they're added, whatever
+/// pins their strips are on, so add strips in show order, left to right as
+/// seen from the street, saying which end each is fed from (see add()).
+///
 /// The set also numbers every pixel in every arch from 0 to getNumPixels() - 1
 /// in that same order, which treats the whole display as one long run that
 /// animations can send things along.
@@ -42,9 +46,17 @@ class ArchSet {
     /// @brief Adds a strip of arches wired end to end. The strip is carved
     /// into getNumPixels() / pixelsPerArch arches. Any pixels left over at the
     /// end of the strip aren't part of an arch.
+    ///
+    /// A strip fed at ArchFeed::RIGHT_FOOT has its data wire come in at the
+    /// right foot of its rightmost arch and run back to the left. The arches
+    /// on it are still added left to right (the one at the far end of the
+    /// wire first) and each is fed at its right foot, so animations run the
+    /// same way as on a strip fed from the left. With one arch per strip,
+    /// this just says which foot the arch is fed at.
     /// @param strip the strip to add
+    /// @param feed which end the data wire comes in at, seen from the street
     /// @return how many arches were made from the strip
-    uint add(Strip* strip);
+    uint add(Strip* strip, ArchFeed feed);
 
     /// @brief Set up for rendering, after all strips have been added.
     void setup() { renderer.setup(); }

@@ -30,9 +30,9 @@ void Arch::fill(const RGB& color, int p, int n) {
 void Arch::rotate(Direction direction) {
     bool away = direction == RIGHT || direction == UP;
     //
-    // On a reversed arch, moving away from pixel 0 is moving towards the
-    // start of the segment on the strip.
-    if (away != reversed) {
+    // On an arch fed at its right foot, moving away from pixel 0 is moving
+    // towards the start of the segment on the strip.
+    if (away != (feed == ArchFeed::RIGHT_FOOT)) {
         strip->rotateRight(start, start + numPixels);
     } else {
         strip->rotateLeft(start, start + numPixels);

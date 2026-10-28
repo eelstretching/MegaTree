@@ -7,13 +7,27 @@
 #include "Strip.h"
 #include "color.h"
 
+/// @brief Which foot of an arch (or end of a run of arches on one strip) the
+/// data wire comes in at, as seen from the street. The show always runs from
+/// the left foot to the right foot, so LEFT_FOOT is fed from the show's start
+/// and RIGHT_FOOT from its end.
+enum class ArchFeed {
+    LEFT_FOOT,
+    RIGHT_FOOT,
+};
+
 /// @brief One leaping arch: a run of consecutive pixels on a Strip. Several
 /// arches wired end to end share one strip (and so one controller output),
 /// with each Arch looking after its own segment.
 ///
-/// Pixel 0 is the foot where data enters the arch and pixel getNumPixels() - 1
-/// is the other foot. Positions outside the arch are ignored on set and read
-/// as black on get, so animations can draw past the ends without checking.
+/// Positions in an arch are in show order, not wiring order: pixel 0 is the
+/// left foot, seen from the street, and pixel getNumPixels() - 1 is the right
+/// foot, whichever foot the data wire comes in at (see ArchFeed). An arch fed
+/// at its right foot is handy when the controller sits to the arch's right;
+/// animations draw the same either way.
+///
+/// Positions outside the arch are ignored on set and read as black on get,
+/// so animations can draw past the ends without checking.
 class Arch {
    protected:
     /// @brief The strip holding this arch's pixels.
@@ -25,13 +39,12 @@ class Arch {
     /// @brief How many pixels are in this arch.
     uint numPixels;
 
-    /// @brief If true, pixel 0 is at the far end of the segment, for an arch
-    /// that was hung the other way round.
-    bool reversed = false;
+    /// @brief Which foot the data wire comes in at.
+    ArchFeed feed = ArchFeed::LEFT_FOOT;
 
     /// @brief Maps a position in the arch to a position on the strip.
     uint toStrip(uint p) {
-        return start + (reversed ? numPixels - 1 - p : p);
+        return start + (feed == ArchFeed::RIGHT_FOOT ? numPixels - 1 - p : p);
     }
 
    public:
@@ -51,9 +64,11 @@ class Arch {
     /// @brief Gets the position of the top of the arch.
     uint getApex() { return numPixels / 2; }
 
-    void setReversed(bool reversed) { this->reversed = reversed; }
+    /// @brief Says which foot the data wire comes in at, seen from the
+    /// street.
+    void setFeed(ArchFeed feed) { this->feed = feed; }
 
-    bool isReversed() { return reversed; }
+    ArchFeed getFeed() { return feed; }
 
     /// @brief Sets the pixel at position p in the arch to the given color.
     void set(int p, const RGB& color);
