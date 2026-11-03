@@ -47,7 +47,9 @@
 // December 31st, so no daylight saving.
 #define UTC_OFFSET_MINUTES (-5 * 60)
 
-#define RTC_I2C i2c1
+// The board's default I2C is the DS3231's bus: I2C1 on GPIO42/43 on the
+// universal-strip-controller, I2C0 on GPIO32/33 on the LED processor board.
+#define RTC_I2C I2C_INSTANCE(PICO_DEFAULT_I2C)
 #define RTC_SDA_PIN PICO_DEFAULT_I2C_SDA_PIN
 #define RTC_SCL_PIN PICO_DEFAULT_I2C_SCL_PIN
 #define RTC_BAUDRATE (100 * 1000)
@@ -175,11 +177,30 @@ static bool readLine(char *buf, int size, int &len) {
     }
 }
 
+//
+// Status light 0: green if we know the time, red if we don't. The LED
+// processor board has no status lights, so there it's a no-op (the status
+// line over USB says the same thing).
+#ifdef USC_STATUS_LIGHT_COUNT
+static StatusLights *lights = nullptr;
+#endif
+
+static void showClockLight() {
+#ifdef USC_STATUS_LIGHT_COUNT
+    lights->set(0, countdownClock.hasTime() ? RGB::Green : RGB::Red);
+    lights->update();
+#endif
+}
+
 int main() {
     stdio_init_all();
 
-    StatusLights lights(PICO_DEFAULT_WS2812_PIN, USC_STATUS_LIGHT_COUNT);
-    lights.begin();
+#ifdef USC_STATUS_LIGHT_COUNT
+    static StatusLights statusLights(PICO_DEFAULT_WS2812_PIN,
+                                     USC_STATUS_LIGHT_COUNT);
+    lights = &statusLights;
+    lights->begin();
+#endif
 
     //
     // The RTC.
@@ -201,10 +222,7 @@ int main() {
         printf("No RTC on the bus. Set the time with T, or rehearse with R.\n");
     }
 
-    //
-    // Status light 0: green if we know the time, red if we don't.
-    lights.set(0, countdownClock.hasTime() ? RGB::Green : RGB::Red);
-    lights.update();
+    showClockLight();
 
     //
     // A canvas made out of strips.
@@ -235,8 +253,7 @@ int main() {
 
         if (readLine(line, sizeof(line), len)) {
             handleCommand(line, show);
-            lights.set(0, countdownClock.hasTime() ? RGB::Green : RGB::Red);
-            lights.update();
+            showClockLight();
         }
 
         uint32_t now = to_ms_since_boot(get_absolute_time());

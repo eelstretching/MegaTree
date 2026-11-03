@@ -36,9 +36,17 @@
 #include "status_lights.hpp"
 
 
+// The universal-strip-controller's and the LED processor board's LED outputs
+// are GPIO0-31. (The Pico build started at 2 to stay off UART0; these boards'
+// UART is on GPIO36/37.) The processor board drives the whole tree, all four
+// shrouds; outputs with nothing plugged in do no harm.
+#ifndef NUM_STRIPS
+#ifdef LED_PROCESSOR_BOARD
+#define NUM_STRIPS 32
+#else
 #define NUM_STRIPS 10
-// The universal-strip-controller's LED outputs are GPIO0-31. (The Pico
-// build started at 2 to stay off UART0; this board's UART is on GPIO36/37.)
+#endif
+#endif
 #define START_PIN 0
 #define STRIP_LEN 200
 #define CANVAS_WIDTH 100
@@ -53,6 +61,7 @@ int main() {
     // pico_status_led can't be used here: on this board it drives the status
     // lights with the SDK's own ws2812 PIO program, whose header name clashes
     // with PicoLEDs' generated ws2812.pio.h.)
+#ifdef USC_STATUS_LIGHT_COUNT
     StatusLights lights(PICO_DEFAULT_WS2812_PIN, USC_STATUS_LIGHT_COUNT);
     lights.begin();
     for (int i = 0; i < 5; i++) {
@@ -63,6 +72,14 @@ int main() {
         lights.update();
         sleep_ms(500);
     }
+#else
+    //
+    // No status lights on this board (the processor board's only LED is on
+    // the radio): give the laptop a moment to open the USB port instead.
+    sleep_ms(2000);
+#endif
+    printf("MegaTree: %d strips on GP%d-GP%d, %d pixels each\n", NUM_STRIPS,
+           START_PIN, START_PIN + NUM_STRIPS - 1, STRIP_LEN);
 
     //
     // A canvas made out of strips.

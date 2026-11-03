@@ -1,0 +1,26 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": { "major": 3, "minor": 21, "patch": 0 },
+  "configurePresets": [
+    {
+      "name": "universal-strip-controller",
+      "displayName": "Universal strip controller",
+      "description": "universal-strip-controller board (the default), builds into build/",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": { "PICO_BOARD": "universal_strip_controller" }
+    },
+    {
+      "name": "processor-board",
+      "displayName": "LED processor board",
+      "description": "RP2350B LED processor board, builds into build-pb/. Needs led-processor-board checked out next to MegaTree.",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build-pb",
+      "cacheVariables": { "PICO_BOARD": "led_processor_board" }
+    }
+  ],
+  "buildPresets": [
+    { "name": "universal-strip-controller", "displayName": "Universal strip controller", "configurePreset": "universal-strip-controller" },
+    { "name": "processor-board", "displayName": "LED processor board", "configurePreset": "processor-board" }
+  ]
+}

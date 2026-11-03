@@ -30,7 +30,13 @@ endif()
 # (waveshare_core2350b_prototype) is in the same directory.
 set(USC_FIRMWARE_PATH ${CMAKE_CURRENT_LIST_DIR}/../universal-strip-controller/firmware
     CACHE PATH "Path to the universal-strip-controller firmware directory")
-set(PICO_BOARD_HEADER_DIRS ${USC_FIRMWARE_PATH}/boards)
+#
+# MegaTree and NewYear also build for the LED processor board
+# (-DPICO_BOARD=led_processor_board, or the "LED processor board" preset in
+# CMakePresets.json), whose header lives in its own repo's firmware.
+set(LPB_FIRMWARE_PATH ${CMAKE_CURRENT_LIST_DIR}/../led-processor-board/firmware
+    CACHE PATH "Path to the led-processor-board firmware directory")
+set(PICO_BOARD_HEADER_DIRS ${USC_FIRMWARE_PATH}/boards ${LPB_FIRMWARE_PATH}/boards)
 # Lets board headers #include "boards/other.h" (see the note in the
 # universal-strip-controller firmware's CMakeLists.txt).
 include_directories(${USC_FIRMWARE_PATH})
