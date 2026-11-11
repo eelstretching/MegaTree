@@ -44,7 +44,10 @@ path at configure time if they live elsewhere.
   end each strip is fed from: `ArchFeed::LEFT_FOOT` or
   `ArchFeed::RIGHT_FOOT`. Fed from the right, each arch on the strip is
   flipped and, with several arches on it, they're taken from the far end of
-  the wire first.
+  the wire first. An arch can have two strands mounted back to back, each on
+  its own strip and showing the same thing: `add(front, frontFeed, back,
+  backFeed)` carves both strips the same way and gives each strip its own
+  feed. Archimations draw on the arch as usual and both strands follow.
 - `Archimation` is the 1D counterpart of PicoLEDs' `Animation`: override
   `init()` and `step()`. `MultiArchimation` and `TimedArchimation` match
   their PicoLEDs namesakes, and `ArchAnimator` runs a list of them like
@@ -69,8 +72,10 @@ path at configure time if they live elsewhere.
   green, blue from the left with every white foot on the left.
 
 The `LeapingArches` program runs them on a group of three 80-pixel arches with
-the controller in the middle and one output per arch (GP2-GP4, the left arch
-fed from its right foot). Edit the `archWiring` table at the top to match how
+the controller in the middle, two back-to-back strands per arch and one output
+per strand: outputs 1-3 are the front strands and 4-6 the back ones (GP2-GP7,
+or GP0-GP5 on the LED processor board), with the left arch fed from its right
+foot. Edit the `archWiring` table at the top to match how
 a group is wired, and set `ARCH_WIRING_CHECK` to 1 to check it in the yard.
 
 ## Star topper

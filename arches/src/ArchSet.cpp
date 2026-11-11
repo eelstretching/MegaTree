@@ -2,6 +2,8 @@
 
 #include <stdio.h>
 
+#include <algorithm>
+
 ArchSet::ArchSet(uint pixelsPerArch, uint8_t brightness)
     : pixelsPerArch(pixelsPerArch), renderer(brightness) {}
 
@@ -11,21 +13,36 @@ ArchSet::~ArchSet() {
     }
 }
 
-uint ArchSet::add(Strip* strip, ArchFeed feed) {
+void ArchSet::addStrip(Strip* strip, uint n) {
     strips.push_back(strip);
     renderer.add(strip);
-    uint n = strip->getNumPixels() / pixelsPerArch;
-    for (uint i = 0; i < n; i++) {
-        //
-        // Fed from the right, the leftmost arch is the last one on the wire.
-        uint segment = feed == ArchFeed::RIGHT_FOOT ? n - 1 - i : i;
-        Arch* arch = new Arch(strip, segment * pixelsPerArch, pixelsPerArch);
-        arch->setFeed(feed);
-        arches.push_back(arch);
-    }
     if (n * pixelsPerArch != strip->getNumPixels()) {
         printf("Strip on pin %d has %d pixels left over after %d arches\n",
                strip->getPin(), strip->getNumPixels() - n * pixelsPerArch, n);
+    }
+}
+
+uint ArchSet::add(Strip* strip, ArchFeed feed) {
+    uint n = strip->getNumPixels() / pixelsPerArch;
+    addStrip(strip, n);
+    for (uint i = 0; i < n; i++) {
+        arches.push_back(
+            new Arch(strip, segmentStart(i, n, feed), pixelsPerArch, feed));
+    }
+    return n;
+}
+
+uint ArchSet::add(Strip* front, ArchFeed frontFeed, Strip* back,
+                  ArchFeed backFeed) {
+    uint n = std::min(front->getNumPixels(), back->getNumPixels()) /
+             pixelsPerArch;
+    addStrip(front, n);
+    addStrip(back, n);
+    for (uint i = 0; i < n; i++) {
+        Arch* arch = new Arch(front, segmentStart(i, n, frontFeed),
+                              pixelsPerArch, frontFeed);
+        arch->addStrand(back, segmentStart(i, n, backFeed), backFeed);
+        arches.push_back(arch);
     }
     return n;
 }
