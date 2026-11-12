@@ -16,8 +16,9 @@
 // A group of three arches in a row, with the controller in the middle. Each
 // arch has two strands of pixels mounted back to back, both showing the same
 // thing, and each strand has its own output, so a group takes six outputs on
-// one output board. Outputs 1-3 carry the front strands and outputs 4-6 the
-// back strands, so the strands of the left arch are on outputs 1 and 4.
+// one output board. Each arch's two strands are on neighbouring outputs, the
+// front strand first: the left arch is outputs 1 and 2, the middle arch 3 and
+// 4, and the right arch 5 and 6.
 // Outputs 1-6 on the bank board ribbon are GP2-GP7 (GP0-GP5 on the LED
 // processor board, whose LED outputs start at GPIO 0).
 //
@@ -53,11 +54,11 @@ struct ArchWiring {
 
 static const ArchWiring archWiring[] = {
     // Left arch: right foot is nearest the box.
-    {{OUTPUT(1), ArchFeed::RIGHT_FOOT}, {OUTPUT(4), ArchFeed::RIGHT_FOOT}},
+    {{OUTPUT(1), ArchFeed::RIGHT_FOOT}, {OUTPUT(2), ArchFeed::RIGHT_FOOT}},
     // Middle arch.
-    {{OUTPUT(2), ArchFeed::LEFT_FOOT}, {OUTPUT(5), ArchFeed::LEFT_FOOT}},
+    {{OUTPUT(3), ArchFeed::LEFT_FOOT}, {OUTPUT(4), ArchFeed::LEFT_FOOT}},
     // Right arch.
-    {{OUTPUT(3), ArchFeed::LEFT_FOOT}, {OUTPUT(6), ArchFeed::LEFT_FOOT}},
+    {{OUTPUT(5), ArchFeed::LEFT_FOOT}, {OUTPUT(6), ArchFeed::LEFT_FOOT}},
 };
 
 #define NUM_ARCHES (sizeof(archWiring) / sizeof(archWiring[0]))

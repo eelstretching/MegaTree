@@ -73,7 +73,8 @@ path at configure time if they live elsewhere.
 
 The `LeapingArches` program runs them on a group of three 80-pixel arches with
 the controller in the middle, two back-to-back strands per arch and one output
-per strand: outputs 1-3 are the front strands and 4-6 the back ones (GP2-GP7,
+per strand: each arch's strands are on neighbouring outputs, so the left arch
+is outputs 1 and 2, the middle 3 and 4, and the right 5 and 6 (GP2-GP7,
 or GP0-GP5 on the LED processor board), with the left arch fed from its right
 foot. Edit the `archWiring` table at the top to match how
 a group is wired, and set `ARCH_WIRING_CHECK` to 1 to check it in the yard.
