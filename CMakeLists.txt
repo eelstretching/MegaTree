@@ -162,6 +162,15 @@ if(PICO_CYW43_SUPPORTED)
         pico_add_extra_outputs(ShowTree)
     endif()
 
+    # Both mini trees run the same firmware.
+    add_executable(ShowMiniTree ShowMiniTree.cpp)
+    pico_set_program_name(ShowMiniTree "ShowMiniTree")
+    pico_set_program_version(ShowMiniTree "0.1")
+    pico_enable_stdio_uart(ShowMiniTree 1)
+    pico_enable_stdio_usb(ShowMiniTree 1)
+    target_link_libraries(ShowMiniTree ShowTreeAnimator pico_stdlib)
+    pico_add_extra_outputs(ShowMiniTree)
+
     # One firmware per group of three arches: group 1 is arches 1-3 (from
     # the left, seen from the street), group 2 arches 4-6.
     foreach(group 1 2)

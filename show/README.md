@@ -12,14 +12,14 @@ of scenes, counted from local midnight, so Hearth starts on the hour, at :20
 and at :40. Lights on at 4:30 lands at the start of Icicles, and lights off at
 10:30 at the end of Classic.
 
-| Starts (min past :00, :20, :40) | Scene | Length | MegaTree | Topper | Arches |
-| --- | --- | --- | --- | --- | --- |
-| 0 | Hearth | 6 min | Starlight | TopperStarlight | ArchFire |
-| 6 | Classic | 4 min | ClassicLights multicolor slo-glo | slow RingChase | ArchGlow, warm white |
-| 10 | Icicles | 3 min | Icicles | white ColorWipe | FillWipe, white and ice blue |
-| 13 | Leap | 2 min | red and green spirals | Pinwheel | Leap, arch 1 to 6 across both controllers |
-| 15 | Candy cane | 3 min | red and white Marquees | Peppermint | ArchRise, red and white |
-| 18 | Greetings | 2 min | ScrollTexts | gold PointChase | ArchGlow, red and green |
+| Starts (min past :00, :20, :40) | Scene | Length | MegaTree | Topper | Arches | Mini trees |
+| --- | --- | --- | --- | --- | --- | --- |
+| 0 | Hearth | 6 min | Starlight | TopperStarlight | ArchFire | TwinkleFox |
+| 6 | Classic | 4 min | ClassicLights multicolor slo-glo | slow RingChase | ArchGlow, warm white | ClassicLights multicolor twinkle |
+| 10 | Icicles | 3 min | Icicles | white ColorWipe | FillWipe, white and ice blue | Icicles |
+| 13 | Leap | 2 min | red and green spirals | Pinwheel | Leap, arch 1 to 6 across both controllers | red and green RotatingColumns |
+| 15 | Candy cane | 3 min | red and white Marquees | Peppermint | ArchRise, red and white | red and white Marquees |
+| 18 | Greetings | 2 min | ScrollTexts | gold PointChase | ArchGlow, red and green | red and green TwinkleFox |
 
 Every scene fades in from black and out to black over 0.75 s, which hides
 small differences between the props' clocks. Effects that go by the clock
@@ -75,10 +75,13 @@ picotool load -f -x build-pb/ShowTree.uf2
 | `ShowTree.uf2` | MegaTree (GP0-31) and star topper (GP35, J2 pin 2) |
 | `ShowArches1.uf2` | Arches 1-3, the left group seen from the street |
 | `ShowArches2.uf2` | Arches 4-6, the right group |
+| `ShowMiniTree.uf2` | Either mini tree (Pico 2 W, 13 strands on GP2-14) |
 
 Arch wiring is LeapingArches': two strands per arch on neighbouring outputs.
 `ShowArches*` also build for a Pico 2 W (outputs from GP2, DS3231 on
-GP26/27).
+GP26/27). `ShowMiniTree` builds for a Pico 2 W (`-DPICO_BOARD=pico2_w`): each
+folded 100-pixel strand is two 50-pixel columns, a 50 x 26 canvas. A mini tree
+with no DS3231 needs WiFi: it stays dark until NTP gives it the time.
 
 ## Testing
 
