@@ -12,8 +12,15 @@ void Leap::init() {
 }
 
 bool Leap::step() {
-    uint total = arches->getNumPixels();
+    //
+    // The ball runs along every arch in the show. If the show's arches are
+    // split between controllers (ArchSet::setShowPlace()), every controller
+    // works out the same ball from the same clock and draws just the part of
+    // it that's on its own arches.
     uint ppa = arches->getPixelsPerArch();
+    uint total = arches->getNumShowArches() * ppa;
+    uint first = arches->getFirstShowArch() * ppa;
+    uint ours = arches->getNumPixels();
     if (total == 0 || colors.empty()) {
         return true;
     }
@@ -23,8 +30,11 @@ bool Leap::step() {
         //
         // Wrap the tail back onto the last arch so the loop is seamless.
         uint p = (head + total - k) % total;
+        if (p < first || p >= first + ours) {
+            continue;
+        }
         RGB c = (*colorMap)[colors[(p / ppa) % colors.size()]];
-        arches->set(p, c.scale8(255 - (k * 255) / (tail + 1)));
+        arches->set(p - first, c.scale8(255 - (k * 255) / (tail + 1)));
     }
     return true;
 }
