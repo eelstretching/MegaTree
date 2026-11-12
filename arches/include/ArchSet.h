@@ -35,6 +35,18 @@ class ArchSet {
 
     Renderer renderer;
 
+    /// @brief Where the i'th arch from the left of n arches on a strip
+    /// starts, given which end the strip is fed from.
+    uint segmentStart(uint i, uint n, ArchFeed feed) {
+        //
+        // Fed from the right, the leftmost arch is the last one on the wire.
+        return (feed == ArchFeed::RIGHT_FOOT ? n - 1 - i : i) * pixelsPerArch;
+    }
+
+    /// @brief Adds a strip to the renderer, saying if it has pixels left
+    /// over after n arches.
+    void addStrip(Strip* strip, uint n);
+
    public:
     /// @brief Creates an empty set of arches.
     /// @param pixelsPerArch how many pixels each arch has
@@ -57,6 +69,23 @@ class ArchSet {
     /// @param feed which end the data wire comes in at, seen from the street
     /// @return how many arches were made from the strip
     uint add(Strip* strip, ArchFeed feed);
+
+    /// @brief Adds two strips of arches mounted back to back, so that each
+    /// arch has two strands showing the same thing (see Arch). Both strips
+    /// are carved into arches the same way as add(strip, feed), and the
+    /// arches made from the back strip become the second strand of the
+    /// matching arch from the front strip. Each strip says which end its data
+    /// wire comes in at, seen from the street, so the two can be fed from
+    /// different feet.
+    ///
+    /// The strips should have the same number of pixels. If one is longer,
+    /// the arches only take as many pixels as fit on the shorter one.
+    /// @param front the strip for the arches' first strands
+    /// @param frontFeed which end the front strip's data wire comes in at
+    /// @param back the strip for the arches' second strands
+    /// @param backFeed which end the back strip's data wire comes in at
+    /// @return how many arches were made from the two strips
+    uint add(Strip* front, ArchFeed frontFeed, Strip* back, ArchFeed backFeed);
 
     /// @brief Set up for rendering, after all strips have been added.
     void setup() { renderer.setup(); }

@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include <vector>
+
 #include "Direction.h"
 #include "Strip.h"
 #include "color.h"
@@ -16,9 +18,29 @@ enum class ArchFeed {
     RIGHT_FOOT,
 };
 
+/// @brief One run of pixels that's part of an arch: a segment of a Strip,
+/// and which foot of the arch its data wire comes in at.
+struct ArchStrand {
+    Strip* strip;
+    uint start;
+    ArchFeed feed;
+
+    /// @brief Maps a position in the arch to a position on the strip.
+    uint toStrip(uint p, uint numPixels) const {
+        return start + (feed == ArchFeed::RIGHT_FOOT ? numPixels - 1 - p : p);
+    }
+};
+
 /// @brief One leaping arch: a run of consecutive pixels on a Strip. Several
 /// arches wired end to end share one strip (and so one controller output),
 /// with each Arch looking after its own segment.
+///
+/// An arch can also have more than one strand, for instance two strands
+/// mounted back to back inside the arch so it can be seen from both sides.
+/// Every strand in an arch has the same number of pixels and shows the same
+/// thing: drawing on the arch draws on all of them, and reading from it reads
+/// the first one. Each strand has its own feed, so the two strands of an arch
+/// can have their data wires come in at different feet.
 ///
 /// Positions in an arch are in show order, not wiring order: pixel 0 is the
 /// left foot, seen from the street, and pixel getNumPixels() - 1 is the right
@@ -30,45 +52,55 @@ enum class ArchFeed {
 /// so animations can draw past the ends without checking.
 class Arch {
    protected:
-    /// @brief The strip holding this arch's pixels.
-    Strip* strip;
+    /// @brief The strands making up this arch. The first is the one added
+    /// when the arch was made, and the one pixels are read back from.
+    std::vector<ArchStrand> strands;
 
-    /// @brief Where this arch's first pixel is on the strip.
-    uint start;
-
-    /// @brief How many pixels are in this arch.
+    /// @brief How many pixels are in this arch (in each of its strands).
     uint numPixels;
 
-    /// @brief Which foot the data wire comes in at.
-    ArchFeed feed = ArchFeed::LEFT_FOOT;
-
-    /// @brief Maps a position in the arch to a position on the strip.
-    uint toStrip(uint p) {
-        return start + (feed == ArchFeed::RIGHT_FOOT ? numPixels - 1 - p : p);
-    }
+    /// @brief Rotates one strand's pixels by one, away from pixel 0 or
+    /// towards it.
+    void rotate(const ArchStrand& s, bool away);
 
    public:
     /// @brief Creates an arch on part of a strip.
     /// @param strip the strip the arch is on
     /// @param start the position on the strip of the arch's first pixel
     /// @param numPixels how many pixels the arch has
-    Arch(Strip* strip, uint start, uint numPixels)
-        : strip(strip), start(start), numPixels(numPixels) {}
+    /// @param feed which foot the data wire comes in at, seen from the street
+    Arch(Strip* strip, uint start, uint numPixels,
+         ArchFeed feed = ArchFeed::LEFT_FOOT)
+        : strands{{strip, start, feed}}, numPixels(numPixels) {}
 
-    Strip* getStrip() { return strip; }
+    /// @brief Adds another strand to the arch, with the same number of pixels
+    /// as the arch, that shows the same thing as the first.
+    /// @param strip the strip the strand is on
+    /// @param start the position on the strip of the strand's first pixel
+    /// @param feed which foot the strand's data wire comes in at, seen from
+    /// the street
+    void addStrand(Strip* strip, uint start, ArchFeed feed) {
+        strands.push_back({strip, start, feed});
+    }
 
-    uint getStart() { return start; }
+    uint getNumStrands() { return strands.size(); }
+
+    const ArchStrand& getStrand(uint i) { return strands[i]; }
+
+    Strip* getStrip() { return strands[0].strip; }
+
+    uint getStart() { return strands[0].start; }
 
     uint getNumPixels() { return numPixels; }
 
     /// @brief Gets the position of the top of the arch.
     uint getApex() { return numPixels / 2; }
 
-    /// @brief Says which foot the data wire comes in at, seen from the
-    /// street.
-    void setFeed(ArchFeed feed) { this->feed = feed; }
+    /// @brief Says which foot the first strand's data wire comes in at, seen
+    /// from the street.
+    void setFeed(ArchFeed feed) { strands[0].feed = feed; }
 
-    ArchFeed getFeed() { return feed; }
+    ArchFeed getFeed() { return strands[0].feed; }
 
     /// @brief Sets the pixel at position p in the arch to the given color.
     void set(int p, const RGB& color);
