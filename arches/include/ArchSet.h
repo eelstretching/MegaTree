@@ -35,6 +35,11 @@ class ArchSet {
 
     Renderer renderer;
 
+    /// @brief Where these arches are in the whole show, when the show's
+    /// arches are split between controllers. See setShowPlace().
+    uint firstShowArch = 0;
+    uint numShowArches = 0;
+
     /// @brief Where the i'th arch from the left of n arches on a strip
     /// starts, given which end the strip is fed from.
     uint segmentStart(uint i, uint n, ArchFeed feed) {
@@ -107,6 +112,26 @@ class ArchSet {
 
     /// @brief Gets the total number of pixels in all of the arches.
     uint getNumPixels() { return arches.size() * pixelsPerArch; }
+
+    /// @brief Says where these arches are in the whole show, when the show's
+    /// arches are split between controllers: these are arches first to
+    /// first + getNumArches() - 1 of showArches, counting from 0 on the left.
+    /// Archimations that travel from arch to arch (Leap) use it to run along
+    /// the whole row, drawing just the part that's on this controller, and
+    /// ArchGlow uses it to keep its pattern going across controllers.
+    /// Without it, these arches are the whole show.
+    void setShowPlace(uint first, uint showArches) {
+        firstShowArch = first;
+        numShowArches = showArches;
+    }
+
+    /// @brief Which arch of the whole show our first arch is.
+    uint getFirstShowArch() { return firstShowArch; }
+
+    /// @brief How many arches the whole show has, on every controller.
+    uint getNumShowArches() {
+        return numShowArches > 0 ? numShowArches : getNumArches();
+    }
 
     Arch* getArch(uint i) { return i < arches.size() ? arches[i] : nullptr; }
 

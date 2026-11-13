@@ -160,3 +160,11 @@ Build notes for the 2026 show, in `docs/`:
   year's pixels.
 - [christmas-2026-plan.md](docs/christmas-2026-plan.md): the week-by-week
   plan to Thanksgiving and the parts list, as of 2026-10-12.
+
+## The coordinated show
+
+`show/` holds the Christmas show that every prop plays together: one shared
+schedule of scenes keyed to the time of day, with time kept by each board's
+DS3231 and corrected over WiFi by NTP. `ShowTree` runs the MegaTree and the
+star topper, and `ShowArches1`/`ShowArches2` the two groups of arches. See
+[show/README.md](show/README.md).
