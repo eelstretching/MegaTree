@@ -75,13 +75,13 @@ picotool load -f -x build-pb/ShowTree.uf2
 | `ShowTree.uf2` | MegaTree (GP0-31) and star topper (GP35, J2 pin 2) |
 | `ShowArches1.uf2` | Arches 1-3, the left group seen from the street |
 | `ShowArches2.uf2` | Arches 4-6, the right group |
-| `ShowMiniTree.uf2` | Either mini tree (Pico 2 W, 13 strands on GP2-14) |
+| `ShowMiniTree.uf2` | Either mini tree (13 strands on GP0-12) |
 
 Arch wiring is LeapingArches': two strands per arch on neighbouring outputs.
 `ShowArches*` also build for a Pico 2 W (outputs from GP2, DS3231 on
-GP26/27). `ShowMiniTree` builds for a Pico 2 W (`-DPICO_BOARD=pico2_w`): each
-folded 100-pixel strand is two 50-pixel columns, a 50 x 26 canvas. A mini tree
-with no DS3231 needs WiFi: it stays dark until NTP gives it the time.
+GP26/27). In `ShowMiniTree` each folded 100-pixel strand is two 50-pixel columns, a
+50 x 26 canvas. It also builds for a Pico 2 W (strands on GP2-14), where with
+no DS3231 it needs WiFi: it stays dark until NTP gives it the time.
 
 ## Testing
 

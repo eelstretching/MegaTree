@@ -10,8 +10,8 @@
 // way round as the MegaTree's.
 //
 // Every prop runs the same schedule (show/include/ShowSchedule.h); see
-// ShowTree.cpp and show/README.md. A mini tree on a bare Pico 2 W has no
-// DS3231, so it gets the time from NTP alone and stays dark until it has it.
+// ShowTree.cpp and show/README.md. The processor board's DS3231 keeps the
+// time, corrected by NTP over WiFi.
 //
 // Over USB serial: S status, A run all the time (daytime testing), G n go to
 // scene n, N back to normal, T NTP now.
@@ -36,10 +36,15 @@ using namespace show;
 #define STRAND_LEN 100
 // Each strand is two columns of 50.
 #define COLUMN_LEN 50
-// On a Pico 2 W the strands are on GP2-GP14 (outputs 1-8 on the first bank
-// board's ribbon, 1-5 on the second's), staying off UART0 on GP0/1.
+// The mini trees run on LED processor boards: the strands are GP0-GP12
+// (outputs 1-8 on the first shroud, 1-5 on the second). On a Pico 2 W they'd
+// be GP2-GP14, staying off UART0 on GP0/1.
 #ifndef START_PIN
+#ifdef LED_PROCESSOR_BOARD
+#define START_PIN 0
+#else
 #define START_PIN 2
+#endif
 #endif
 #define BRIGHTNESS 32
 #define FPS 40
