@@ -144,3 +144,43 @@ target_link_libraries(StarTopper
     pico_stdlib
 )
 pico_add_extra_outputs(StarTopper)
+
+# The coordinated Christmas show (show/, ShowTree.cpp, ShowArches.cpp). The
+# props need a radio for NTP, and the tree needs the processor board's 32
+# outputs, so they're built for boards with a CYW43 (the LED processor board,
+# the Pico 2 W).
+if(PICO_CYW43_SUPPORTED)
+    add_subdirectory(show)
+
+    if(PICO_BOARD STREQUAL "led_processor_board")
+        add_executable(ShowTree ShowTree.cpp)
+        pico_set_program_name(ShowTree "ShowTree")
+        pico_set_program_version(ShowTree "0.1")
+        pico_enable_stdio_uart(ShowTree 1)
+        pico_enable_stdio_usb(ShowTree 1)
+        target_link_libraries(ShowTree ShowTreeAnimator pico_stdlib)
+        pico_add_extra_outputs(ShowTree)
+    endif()
+
+    # Both mini trees run the same firmware.
+    add_executable(ShowMiniTree ShowMiniTree.cpp)
+    pico_set_program_name(ShowMiniTree "ShowMiniTree")
+    pico_set_program_version(ShowMiniTree "0.1")
+    pico_enable_stdio_uart(ShowMiniTree 1)
+    pico_enable_stdio_usb(ShowMiniTree 1)
+    target_link_libraries(ShowMiniTree ShowTreeAnimator pico_stdlib)
+    pico_add_extra_outputs(ShowMiniTree)
+
+    # One firmware per group of three arches: group 1 is arches 1-3 (from
+    # the left, seen from the street), group 2 arches 4-6.
+    foreach(group 1 2)
+        add_executable(ShowArches${group} ShowArches.cpp)
+        pico_set_program_name(ShowArches${group} "ShowArches${group}")
+        pico_set_program_version(ShowArches${group} "0.1")
+        pico_enable_stdio_uart(ShowArches${group} 1)
+        pico_enable_stdio_usb(ShowArches${group} 1)
+        target_compile_definitions(ShowArches${group} PRIVATE SHOW_ARCH_GROUP=${group})
+        target_link_libraries(ShowArches${group} ShowArchAnimator pico_stdlib)
+        pico_add_extra_outputs(ShowArches${group})
+    endforeach()
+endif()
