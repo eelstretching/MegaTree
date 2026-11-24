@@ -96,8 +96,9 @@ static int ringStart(int ring) {
 
 // Where each ring's first tip is on the wire (0-based within the ring); the
 // other four follow every ring size / 5 pixels. Steve found the inner ring's
-// tips at pixels 3, 7, 11, 15, 19 (1-based). Change one live with 't'.
-static int tipOffsets[] = {2, 0, 0};
+// tips at pixels 3, 7, 11, 15, 19 and the middle ring's at 4, 10, 16, 22, 28
+// (1-based). Change one live with 't'.
+static int tipOffsets[] = {2, 3, 0};
 
 static bool isTip(int ring, int pos) {
     int spacing = ringSizes[ring] / 5;
