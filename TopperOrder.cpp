@@ -7,8 +7,9 @@
 //     ring (20) red, middle ring (30) green, outer ring (40) blue. A wrong
 //     color in a ring means a pixel from another ring is in it.
 //   - The first pixel of each ring is white.
-//   - Every fifth of a ring from its first pixel is gold. If the wire starts
-//     at a tip, the gold pixels should land on the other four tips.
+//   - The five tips of each ring are gold, spaced a fifth of the ring apart
+//     from that ring's tip offset (tipOffsets below). 't' moves the current
+//     ring's gold marks along one pixel, to find the offset.
 //   - The newest pixel blinks white and off, so you can always find where it's got
 //     to, even paused.
 // Dot mode lights only the newest pixel (blinking), for when the fill gets
@@ -23,6 +24,7 @@
 //   g <num>   then Enter: jump to pixel <num> (1-90) and pause
 //   a         all on: the whole star, ring colors, white starts, gold tips
 //   m         fill mode / dot mode
+//   t         move the current ring's gold tip marks along one pixel
 //   r         restart from the first pixel
 //   [ / ]     dimmer / brighter
 //   ?         show the keys
@@ -92,15 +94,21 @@ static int ringStart(int ring) {
     return p;
 }
 
+// Where each ring's first tip is on the wire (0-based within the ring); the
+// other four follow every ring size / 5 pixels. Steve found the inner ring's
+// tips at pixels 3, 7, 11, 15, 19 (1-based). Change one live with 't'.
+static int tipOffsets[] = {2, 0, 0};
+
 static bool isTip(int ring, int pos) {
-    return pos != 0 && pos % (ringSizes[ring] / 5) == 0;
+    int spacing = ringSizes[ring] / 5;
+    return pos % spacing == tipOffsets[ring] % spacing;
 }
 
 static RGB colorOf(int p) {
     int pos;
     int ring = ringOf(p, &pos);
-    if (pos == 0) return RGB::White;
     if (isTip(ring, pos)) return RGB::Gold;
+    if (pos == 0) return RGB::White;
     return ringColors[ring];
 }
 
@@ -113,8 +121,9 @@ static void printHelp() {
     printf("  g<num>  + Enter: jump to pixel <num> (1-%d)\n", numPixels);
     printf("  a       all on            m     fill / dot mode\n");
     printf("  r       restart           ?     this list\n");
+    printf("  t       shift this ring's gold tips along one pixel\n");
     printf("colors: inner red, middle green, outer blue,\n");
-    printf("        ring start white, every 1/5 of a ring gold (tips)\n");
+    printf("        ring start white, the 5 tips gold\n");
 }
 
 static void printPixel() {
@@ -126,8 +135,8 @@ static void printPixel() {
     }
     printf("\n>>> PIXEL %2d of %d   %s ring #%d%s%s", head + 1, numPixels,
            ringNames[ring], pos + 1,
-           pos == 0 ? "  (start, white)"
-                    : (isTip(ring, pos) ? "  (tip, gold)" : ""),
+           isTip(ring, pos) ? "  (tip, gold)"
+                            : (pos == 0 ? "  (start, white)" : ""),
            paused ? "   [paused]" : "");
 }
 
@@ -228,6 +237,17 @@ static void handleKey(int c) {
             dotMode = !dotMode;
             printSettings();
             break;
+        case 't': {
+            int pos;
+            int ring = ringOf(head, &pos);
+            int spacing = ringSizes[ring] / 5;
+            tipOffsets[ring] = (tipOffsets[ring] + 1) % spacing;
+            printf("\n>>> %s ring gold tips now at", ringNames[ring]);
+            for (int i = 0; i < 5; i++) {
+                printf(" %d", tipOffsets[ring] + i * spacing + 1);
+            }
+            break;
+        }
         case 'r':
             paused = false;
             moveTo(0);
