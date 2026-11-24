@@ -184,3 +184,17 @@ if(PICO_CYW43_SUPPORTED)
         pico_add_extra_outputs(ShowArches${group})
     endforeach()
 endif()
+
+# Lights the star topper's pixels one at a time in wire order, ring colors and
+# serial controls, to check every pixel is in the right place on the star.
+# Boots on GP35 on the processor board.
+add_executable(TopperOrder TopperOrder.cpp)
+pico_set_program_name(TopperOrder "TopperOrder")
+pico_set_program_version(TopperOrder "0.1")
+pico_enable_stdio_uart(TopperOrder 1)
+pico_enable_stdio_usb(TopperOrder 1)
+target_link_libraries(TopperOrder
+    PicoLEDs
+    pico_stdlib
+)
+pico_add_extra_outputs(TopperOrder)

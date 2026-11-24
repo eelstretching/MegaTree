@@ -161,6 +161,17 @@ int main() {
     Strip topperStrip(TOPPER_PIN, 90);
     topperStrip.setColorOrder(ColorOrder::ORGB);
     Topper topper(&topperStrip, {20, 30, 40}, 0, TOPPER_BRIGHTNESS);
+    //
+    // How the real star is wired (Steve, with TopperOrder, 2026-11-23): every
+    // ring starts at the bottom valley and runs anticlockwise as seen from
+    // the front, so its first tip is the lower right one and its third the
+    // top. Counting wire pixels from 1, the tips are 3/7/11/15/19 (inner),
+    // 4/10/16/22/28 (middle) and 5/13/21/29/37 (outer). The bottom valley is
+    // half way round from the top tip.
+    for (uint ring = 0; ring < topper.getNumRings(); ring++) {
+        topper.setRingStart(ring, topper.getRingSize(ring) / 2);
+        topper.setRingReversed(ring, true);
+    }
     topper.setup();
     topper.clear();
     topper.show();
