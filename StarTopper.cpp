@@ -36,14 +36,16 @@ int main() {
 
     Topper topper(&strip, {20, 30, 40}, 0, BRIGHTNESS);
     //
-    // Where each ring's wire starts, found on the real star with TopperOrder
-    // (2026-11-23): the tips are on wire pixels 3/7/11/15/19 (inner),
-    // 4/10/16/22/28 (middle) and 5/13/21/29/37 (outer), counting from 1, so
-    // every ring starts at a valley, half an edge before a tip. Assumes that
-    // first tip is the top one and the rings run clockwise from the front.
-    topper.setRingStart(0, 20 - 2);
-    topper.setRingStart(1, 30 - 3);
-    topper.setRingStart(2, 40 - 4);
+    // How the real star is wired (Steve, with TopperOrder, 2026-11-23): every
+    // ring starts at the bottom valley and runs anticlockwise as seen from
+    // the front, so its first tip is the lower right one and its third the
+    // top. Counting wire pixels from 1, the tips are 3/7/11/15/19 (inner),
+    // 4/10/16/22/28 (middle) and 5/13/21/29/37 (outer). The bottom valley is
+    // half way round from the top tip.
+    for (uint ring = 0; ring < topper.getNumRings(); ring++) {
+        topper.setRingStart(ring, topper.getRingSize(ring) / 2);
+        topper.setRingReversed(ring, true);
+    }
     topper.setup();
     topper.clear();
     topper.show();
