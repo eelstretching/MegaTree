@@ -36,12 +36,14 @@ int main() {
 
     Topper topper(&strip, {20, 30, 40}, 0, BRIGHTNESS);
     //
-    // Where each ring's wire starts, counting clockwise from the top tip as
-    // seen from the front, and whether it runs anticlockwise. Until it's on
-    // the tree we're guessing that every ring starts at the top tip and runs
-    // clockwise, as HolidayCoro's instructions say.
-    // topper.setRingStart(0, 0);
-    // topper.setRingReversed(0, false);
+    // Where each ring's wire starts, found on the real star with TopperOrder
+    // (2026-11-23): the tips are on wire pixels 3/7/11/15/19 (inner),
+    // 4/10/16/22/28 (middle) and 5/13/21/29/37 (outer), counting from 1, so
+    // every ring starts at a valley, half an edge before a tip. Assumes that
+    // first tip is the top one and the rings run clockwise from the front.
+    topper.setRingStart(0, 20 - 2);
+    topper.setRingStart(1, 30 - 3);
+    topper.setRingStart(2, 40 - 4);
     topper.setup();
     topper.clear();
     topper.show();
