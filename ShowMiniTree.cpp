@@ -25,11 +25,17 @@
 #include "ClassicLights.h"
 #include "Icicles.h"
 #include "Marquees.h"
+#include "Pinwheel.h"
+#include "PointChase.h"
+#include "RingChase.h"
+#include "ColorWipe.h"
 #include "RotatingColumns.h"
 #include "ShowDirector.h"
 #include "ShowTime.h"
 #include "ShowTreeAnimator.h"
 #include "Strip.h"
+#include "Topper.h"
+#include "TopperStarlight.h"
 #include "TwinkleFox.h"
 #include "pico/stdlib.h"
 
@@ -52,6 +58,15 @@ using namespace show;
 #define BRIGHTNESS 32
 #define FPS 40
 
+// The mini tree's topper: HolidayCoro's 19" 2 row star, 50 bullet pixels in
+// rings of 20 and 30 (inner first), on output 8, right after the strands.
+// Set SHOW_TOPPER to 0 to run the tree alone.
+#ifndef SHOW_TOPPER
+#define SHOW_TOPPER 1
+#endif
+#define TOPPER_PIN (START_PIN + NUM_STRANDS)
+#define TOPPER_BRIGHTNESS 32
+
 // Last year's Wally's Lights bullet pixels. If red shows as green, try
 // ColorOrder::OGRB.
 #ifndef MINI_TREE_COLOR_ORDER
@@ -61,8 +76,9 @@ using namespace show;
 int main() {
     stdio_init_all();
     sleep_ms(2000);
-    printf("ShowMiniTree: %d strands on GP%d-GP%d, %d pixels each\n",
-           NUM_STRANDS, START_PIN, START_PIN + NUM_STRANDS - 1, STRAND_LEN);
+    printf("ShowMiniTree: %d strands on GP%d-GP%d, %d pixels each%s\n",
+           NUM_STRANDS, START_PIN, START_PIN + NUM_STRANDS - 1, STRAND_LEN,
+           SHOW_TOPPER ? ", 19\" star on the next pin" : "");
 
     //
     // The radio first: it has to claim its PIO state machine before the
@@ -89,6 +105,8 @@ int main() {
     });
     uint8_t rgColors[] = {0, 1};
     uint8_t rwColors[] = {0, 3};
+    uint8_t rgwColors[] = {0, 1, 3};
+    uint8_t goldColors[] = {4};
     ArrayColorMap redGreen({RGB::Red, RGB::Green});
 
     ShowDirector director;
@@ -129,6 +147,41 @@ int main() {
     TwinkleFox redGreenTwinkle(&canvas, 4, 6);
     redGreenTwinkle.addPalette(&redGreen);
     tree.set(GREETINGS, &redGreenTwinkle);
+
+#if SHOW_TOPPER
+    //
+    // The star, set up like the MegaTree's topper (ShowTree.cpp). Assumed
+    // wired like the big star: every ring starts at the bottom valley and
+    // runs anticlockwise as seen from the front. Check it with
+    // TopperOrderMini.
+    Strip topperStrip(TOPPER_PIN, 50);
+    topperStrip.setColorOrder(MINI_TREE_COLOR_ORDER);
+    Topper topper(&topperStrip, {20, 30}, 0, TOPPER_BRIGHTNESS);
+    for (uint ring = 0; ring < topper.getNumRings(); ring++) {
+        topper.setRingStart(ring, topper.getRingSize(ring) / 2);
+        topper.setRingReversed(ring, true);
+    }
+    topper.setup();
+    topper.clear();
+    topper.show();
+    ShowTopper star(&topper, TOPPER_BRIGHTNESS);
+
+    TopperStarlight topperStarlight(&topper);
+    star.set(HEARTH, &topperStarlight);
+    RingChase ringChase(&topper, &xmasColors, 3, rgwColors, 273);
+    star.set(CLASSIC, &ringChase);
+    uint8_t whiteColors[] = {3};
+    ColorWipe whiteWipe(&topper, &xmasColors, 1, whiteColors, 45, 45);
+    star.set(ICICLES, &whiteWipe);
+    uint8_t pinwheelColors[] = {0, 1, 3, 4};
+    Pinwheel pinwheel(&topper, &xmasColors, 4, pinwheelColors, 5, 0, 2);
+    star.set(LEAP, &pinwheel);
+    Pinwheel peppermint(&topper, &xmasColors, 2, rwColors, 10, 96, -2);
+    star.set(CANDY_CANE, &peppermint);
+    PointChase goldChase(&topper, &xmasColors, 1, goldColors, 10);
+    star.set(GREETINGS, &goldChase);
+    tree.setTopper(&star);
+#endif
 
     director.printHelp();
     while (true) {

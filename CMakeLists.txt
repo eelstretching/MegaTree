@@ -226,3 +226,16 @@ target_link_libraries(TopperOrder
     pico_stdlib
 )
 pico_add_extra_outputs(TopperOrder)
+
+# The same, for the mini tree's 19" 2 row star on output 8 (GP7).
+add_executable(TopperOrderMini TopperOrder.cpp)
+pico_set_program_name(TopperOrderMini "TopperOrderMini")
+pico_set_program_version(TopperOrderMini "0.1")
+pico_enable_stdio_uart(TopperOrderMini 1)
+pico_enable_stdio_usb(TopperOrderMini 1)
+target_compile_definitions(TopperOrderMini PRIVATE MINI_STAR=1)
+target_link_libraries(TopperOrderMini
+    PicoLEDs
+    pico_stdlib
+)
+pico_add_extra_outputs(TopperOrderMini)
