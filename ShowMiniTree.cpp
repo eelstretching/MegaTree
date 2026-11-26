@@ -1,13 +1,16 @@
 //
-// A mini tree's part of the Christmas show. Both mini trees run this same
-// firmware.
+// The mini tree's part of the Christmas show. There's one mini tree in 2026.
 //
-// A mini tree is 13 strands of 100 pixels, each folded over the hub at the
-// top, so every strand makes two of the 26 columns: 50 pixels up, then 50
-// back down (docs/mini-trees.md). That's exactly how a 50 pixel wide canvas
-// lays out a 100 pixel strip (one row forwards, the next backwards), so the
-// canvas is 50 x 26 with x running up each column from the bottom, the same
-// way round as the MegaTree's.
+// It's 7 strands of 200 pixels (last year's 100-pixel strands joined in
+// pairs), each laid as a zig-zag of four 50-pixel columns: pixel 1 at the
+// bottom, up the first column, over the hub, down the second, up the third,
+// down the fourth, so both ends of every strand land at the bottom by the
+// controller (docs/mini-trees.md). That's exactly how a 50 pixel wide canvas
+// lays out a 200 pixel strip (rows alternately forwards and backwards), so
+// the canvas is 50 x 28 with x running up each column from the bottom, the
+// same way round as the MegaTree's. Each strand's first column sits next to
+// the previous strand's last one, all the way round the tree in the same
+// direction. MiniTreeCheck lights the columns one at a time to check that.
 //
 // Every prop runs the same schedule (show/include/ShowSchedule.h); see
 // ShowTree.cpp and show/README.md. The processor board's DS3231 keeps the
@@ -32,13 +35,13 @@
 
 using namespace show;
 
-#define NUM_STRANDS 13
-#define STRAND_LEN 100
-// Each strand is two columns of 50.
+#define NUM_STRANDS 7
+#define STRAND_LEN 200
+// Each strand is four columns of 50.
 #define COLUMN_LEN 50
-// The mini trees run on LED processor boards: the strands are GP0-GP12
-// (outputs 1-8 on the first shroud, 1-5 on the second). On a Pico 2 W they'd
-// be GP2-GP14, staying off UART0 on GP0/1.
+// The mini tree runs on an LED processor board: the strands are GP0-GP6,
+// outputs 1-7 on the first shroud (one bank board). On a Pico 2 W they'd be
+// GP2-GP8, staying off UART0 on GP0/1.
 #ifndef START_PIN
 #ifdef LED_PROCESSOR_BOARD
 #define START_PIN 0
