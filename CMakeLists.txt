@@ -117,6 +117,20 @@ target_link_libraries(LeapingArches
 )
 pico_add_extra_outputs(LeapingArches)
 
+# Steps through the arch patterns by hand (n/p, auto-advance, brightness over
+# USB serial) on one group of three two-strand arches, with no show schedule,
+# to try out the arches as they're wired.
+add_executable(ArchPatternTest ArchPatternTest.cpp)
+pico_set_program_name(ArchPatternTest "ArchPatternTest")
+pico_set_program_version(ArchPatternTest "0.1")
+pico_enable_stdio_uart(ArchPatternTest 1)
+pico_enable_stdio_usb(ArchPatternTest 1)
+target_link_libraries(ArchPatternTest
+    Arches
+    pico_stdlib
+)
+pico_add_extra_outputs(ArchPatternTest)
+
 # The New Year's Eve countdown, as its own firmware.
 add_executable(NewYear NewYear.cpp)
 pico_set_program_name(NewYear "NewYear")
