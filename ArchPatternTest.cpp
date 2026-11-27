@@ -35,7 +35,7 @@
 #include "pico/stdlib.h"
 
 #define PIXELS_PER_ARCH 80
-#define BRIGHTNESS 32
+#define BRIGHTNESS 192
 #define FPS 40
 #define AUTO_SECONDS 20
 
@@ -223,7 +223,12 @@ int main() {
     animator.add(&cylons);
 
     bool autoAdvance = false;
-    int brightIdx = 3;  // 32
+    // Start at the step nearest BRIGHTNESS.
+    int brightIdx = 0;
+    while (brightIdx < (int)NUM_BRIGHTNESS - 1 &&
+           brightnessSteps[brightIdx] < BRIGHTNESS) {
+        brightIdx++;
+    }
     arches.setBrightness(brightnessSteps[brightIdx]);
 
     animator.init();

@@ -29,7 +29,7 @@
 // (see ArchWiringCheck.h); a back strand wired the wrong way round shows up
 // as a dot running against the front strand's.
 #define PIXELS_PER_ARCH 80
-#define BRIGHTNESS 32
+#define BRIGHTNESS 192
 #define FPS 40
 #define ARCH_WIRING_CHECK 0
 
