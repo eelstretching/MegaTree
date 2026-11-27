@@ -163,6 +163,8 @@ static bool rtcRead(int64_t& offsetUs) {
     return false;
 }
 
+#if SHOW_WIFI
+// Only NTP sets the RTC, so this is only built with WiFi.
 /// @brief Sets the RTC from our time. Waits for the start of the next second
 /// and writes it then: writing the seconds restarts the DS3231's count
 /// within the second, so it ticks in step with us from then on.
@@ -187,6 +189,7 @@ static bool rtcWrite(int64_t offsetUs) {
     dt.dotw = 0;
     return rtc->setDatetime(dt);
 }
+#endif  // SHOW_WIFI
 
 //
 // NTP and the WiFi.
@@ -389,8 +392,10 @@ static void core1Main() {
     }
 
     uint64_t nextRtc = time_us_64() + kRtcReadEveryUs;
+#if SHOW_WIFI
     uint64_t nextNtp = 0;
     uint64_t nextWifi = 0;
+#endif
     while (true) {
         uint64_t now = time_us_64();
 #if SHOW_WIFI
