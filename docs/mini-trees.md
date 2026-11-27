@@ -1,5 +1,22 @@
 # Mini trees
 
+> **2026: one mini tree, 7 strands of 200.** Only 7 xConnect leads are wired, so this year
+> there's one mini tree: last year's 100-pixel strands joined in pairs into 7 strands of 200,
+> each laid as a zig-zag of four 50-pixel columns, 28 columns in all. Pixel 1 is at the bottom
+> of the strand's first column; it goes up, over the hub, down the second, up the third and
+> down the fourth, so both ends land at the bottom. Output 1 takes hub holes 1-4, output 2 holes
+> 5-8, ... output 7 holes 25-28, each strand starting next to where the last one ended
+> (28-hole template: `christmas-2026/mini-tree-hub-270-13.6875in-28.pdf` in the project files,
+> 10 degrees apart). One bank board, outputs 1-7 (GP0-6); output 8 (GP7) drives the
+> topper, a HolidayCoro 19" 2 row star (50 bullet pixels, rings of 20 and 30, inner first; check
+> its wiring with `TopperOrderMini`). `ShowMiniTree` is a 50 x 28 canvas; flash `MiniTreeCheck` first to check the wiring
+> (`w` walks a comet up every column in turn: it should always go up and step round the tree
+> one column at a time). 1,400 pixels is about 350 W at full white, right at the LRS-350-12's
+> rating, and a 200-pixel strand draws about 4.2 A at full white, over a RUEF400's 4 A hold,
+> so keep test brightness well below full (the show runs at 32/255).
+>
+> The rest of this page is the original two-tree plan.
+
 Two mini trees use last year's pixels: 27 strands of 100 [Wally's Lights 12 V WS2811 xConnect
 bullet pixels](https://wallyslights.com/products/12v-ws2811-xconnect-resistor-bullet-pixel?variant=39808961413278),
 mounted in strips at 1 inch spacing with 4 inches of wire between shells. Each tree takes 13

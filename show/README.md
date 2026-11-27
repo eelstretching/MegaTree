@@ -12,7 +12,7 @@ of scenes, counted from local midnight, so Hearth starts on the hour, at :20
 and at :40. Lights on at 4:30 lands at the start of Icicles, and lights off at
 10:30 at the end of Classic.
 
-| Starts (min past :00, :20, :40) | Scene | Length | MegaTree | Topper | Arches | Mini trees |
+| Starts (min past :00, :20, :40) | Scene | Length | MegaTree | Topper | Arches | Mini tree |
 | --- | --- | --- | --- | --- | --- | --- |
 | 0 | Hearth | 6 min | Starlight | TopperStarlight | ArchFire | TwinkleFox |
 | 6 | Classic | 4 min | ClassicLights multicolor slo-glo | slow RingChase | ArchGlow, warm white | ClassicLights multicolor twinkle |
@@ -75,12 +75,13 @@ picotool load -f -x build-pb/ShowTree.uf2
 | `ShowTree.uf2` | MegaTree (GP0-31) and star topper (GP35, J2 pin 2) |
 | `ShowArches1.uf2` | Arches 1-3, the left group seen from the street |
 | `ShowArches2.uf2` | Arches 4-6, the right group |
-| `ShowMiniTree.uf2` | Either mini tree (13 strands on GP0-12) |
+| `ShowMiniTree.uf2` | The mini tree (7 strands of 200 on GP0-6) |
 
 Arch wiring is LeapingArches': two strands per arch on neighbouring outputs.
 `ShowArches*` also build for a Pico 2 W (outputs from GP2, DS3231 on
-GP26/27). In `ShowMiniTree` each folded 100-pixel strand is two 50-pixel columns, a
-50 x 26 canvas. It also builds for a Pico 2 W (strands on GP2-14), where with
+GP26/27). In `ShowMiniTree` each 200-pixel strand is a zig-zag of four 50-pixel columns,
+a 50 x 28 canvas (check the wiring with `MiniTreeCheck` first). It also builds
+for a Pico 2 W (strands on GP2-8), where with
 no DS3231 it needs WiFi: it stays dark until NTP gives it the time.
 
 ## Testing

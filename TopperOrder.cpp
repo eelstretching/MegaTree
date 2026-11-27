@@ -21,7 +21,8 @@
 //   b or ,    step back one pixel (and pause)
 //   + / -     faster / slower
 //   1 2 3     jump to the start of that ring (and pause)
-//   g <num>   then Enter: jump to pixel <num> (1-90) and pause
+//   g <num>   then Enter: jump to pixel <num> (1-90, 1-50 on the mini star)
+//             and pause
 //   a         all on: the whole star, ring colors, white starts, gold tips
 //   m         fill mode / dot mode
 //   t         move the current ring's gold tip marks along one pixel
@@ -40,8 +41,18 @@
 #include "pico/stdio_usb.h"
 #include "pico/stdlib.h"
 
+// MINI_STAR builds it for the mini tree's topper instead: HolidayCoro's 19"
+// 2 row star (rings of 20 and 30, inner first), on output 8 (GP7) of the
+// mini tree's bank board.
+#ifndef MINI_STAR
+#define MINI_STAR 0
+#endif
 #ifndef TOPPER_PIN
-#ifdef LED_PROCESSOR_BOARD
+#if MINI_STAR && defined(LED_PROCESSOR_BOARD)
+#define TOPPER_PIN 7
+#elif MINI_STAR
+#define TOPPER_PIN 9
+#elif defined(LED_PROCESSOR_BOARD)
 // On J2, through the spare output board.
 #define TOPPER_PIN 35
 #else
@@ -50,10 +61,19 @@
 #endif
 #define FPS 30
 
+#if MINI_STAR
+// HolidayCoro's 19" 2 row star, innermost ring first on the wire.
+static const int ringSizes[] = {20, 30};
+#else
 // HolidayCoro's 24" 3 row star, innermost ring first on the wire.
 static const int ringSizes[] = {20, 30, 40};
+#endif
 static const int numRings = sizeof(ringSizes) / sizeof(ringSizes[0]);
+#if MINI_STAR
+static const char* ringNames[] = {"INNER", "OUTER"};
+#else
 static const char* ringNames[] = {"INNER", "MIDDLE", "OUTER"};
+#endif
 static const char* ringColorNames[] = {"red", "green", "blue"};
 static const RGB ringColors[] = {RGB::Red, RGB::Green, RGB::Blue};
 static int numPixels = 0;

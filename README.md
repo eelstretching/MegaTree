@@ -156,8 +156,9 @@ Build notes for the 2026 show, in `docs/`:
   tree that the strands tension against.
 - [power.md](docs/power.md): power supplies, fuse blocks and the perfboard
   bank boards that give every strand one 3-wire cable, with wire sizes.
-- [mini-trees.md](docs/mini-trees.md): the two mini trees built from last
-  year's pixels.
+- [mini-trees.md](docs/mini-trees.md): the mini tree built from last year's
+  pixels (one tree of 7 zig-zag strands in 2026; `MiniTreeCheck` checks its
+  wiring).
 - [christmas-2026-plan.md](docs/christmas-2026-plan.md): the week-by-week
   plan to Thanksgiving and the parts list, as of 2026-10-12.
 
