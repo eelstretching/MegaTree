@@ -6,11 +6,11 @@ PicoComm can take over the clock later without changing the schedule.
 
 ## The schedule
 
-`include/ShowSchedule.h` holds it. The show runs from 4:30 to 10:30 pm Eastern
+`include/ShowSchedule.h` holds it. The show runs from 4:30 to 11 pm Eastern
 (UTC-5 all season, no daylight saving to worry about). It's a 20 minute loop
 of scenes, counted from local midnight, so Hearth starts on the hour, at :20
 and at :40. Lights on at 4:30 lands at the start of Icicles, and lights off at
-10:30 at the end of Classic.
+11 at the end of Greetings.
 
 | Starts (min past :00, :20, :40) | Scene | Length | MegaTree | Topper | Arches | Mini tree |
 | --- | --- | --- | --- | --- | --- | --- |

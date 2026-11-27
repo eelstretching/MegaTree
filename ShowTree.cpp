@@ -3,7 +3,7 @@
 //
 // Every prop runs the same schedule (show/include/ShowSchedule.h): a 20
 // minute loop of scenes that starts on the hour, :20 and :40, from 4:30 to
-// 10:30 pm Eastern, fading through black between scenes. Each prop works
+// 11 pm Eastern, fading through black between scenes. Each prop works
 // out the scene from the time of day, so they change together without
 // talking to each other. Core 1 keeps the time: the DS3231, corrected from an
 // internet time server (NTP) over WiFi every few hours. See show/README.md.

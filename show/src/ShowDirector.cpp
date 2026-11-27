@@ -82,8 +82,12 @@ void ShowDirector::printStatus() {
 void ShowDirector::printHelp() {
     printf(
         "Show commands: S status | A run all the time | G n go to scene n "
-        "now (1-%d) | N normal | T sync with NTP now\n",
+        "now (1-%d) | N normal | T sync with NTP now | ? this help\n",
         NUM_SCENES);
+    printf("Show hours: %02d:%02d to %02d:%02d local (UTC%+d), dark otherwise\n",
+           (int)(hours.startMinute / 60), (int)(hours.startMinute % 60),
+           (int)(hours.endMinute / 60), (int)(hours.endMinute % 60),
+           (int)(hours.utcOffsetMinutes / 60));
     printf("Scenes:");
     for (int i = 0; i < NUM_SCENES; i++) {
         printf(" %d %s (%lu s)%s", i + 1, kScenes[i].name,
