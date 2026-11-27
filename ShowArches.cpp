@@ -41,7 +41,7 @@ using namespace show;
 #define SHOW_ARCHES 6
 
 #define PIXELS_PER_ARCH 80
-#define BRIGHTNESS 32
+#define BRIGHTNESS 192
 #define FPS 40
 
 #ifdef LED_PROCESSOR_BOARD

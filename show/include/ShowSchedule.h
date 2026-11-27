@@ -80,9 +80,9 @@ struct ShowHours {
     int32_t utcOffsetMinutes = -5 * 60;
     /// @brief Lights on, in minutes after local midnight (4:30 pm).
     int32_t startMinute = 16 * 60 + 30;
-    /// @brief Lights off, in minutes after local midnight (10:30 pm). If it's
+    /// @brief Lights off, in minutes after local midnight (11 pm). If it's
     /// earlier than startMinute, the show runs past midnight.
-    int32_t endMinute = 22 * 60 + 30;
+    int32_t endMinute = 23 * 60;
 };
 
 /// @brief Where the show is at some moment.

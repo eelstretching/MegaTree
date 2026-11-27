@@ -40,10 +40,11 @@ int main() {
         CHECK(toUnixSeconds(2026, 11, 12, 0, 0, 0) == 1794441600);
     }
 
-    // Dark before 4:30 pm, and at 10:30 pm.
+    // Dark before 4:30 pm, and at 11 pm.
     CHECK(!locate(eastern(2026, 12, 1, 16, 29, 59)).on);
     CHECK(locate(eastern(2026, 12, 1, 16, 29, 59)).level == 0);
-    CHECK(!locate(eastern(2026, 12, 1, 22, 30, 0)).on);
+    CHECK(locate(eastern(2026, 12, 1, 22, 30, 0)).on);
+    CHECK(!locate(eastern(2026, 12, 1, 23, 0, 0)).on);
     CHECK(!locate(eastern(2026, 12, 1, 3, 0, 0)).on);
 
     // 4:30 pm is ten minutes into a loop, at the start of Icicles, fading in
@@ -98,11 +99,11 @@ int main() {
         CHECK(locate(cut).level == 0);
     }
 
-    // Classic fades out into lights off at 10:30.
+    // Greetings fades out into lights off at 11.
     {
-        Position p = locate(eastern(2026, 12, 1, 22, 29, 59, 900000));
+        Position p = locate(eastern(2026, 12, 1, 22, 59, 59, 900000));
         CHECK(p.on);
-        CHECK(p.scene == CLASSIC);
+        CHECK(p.scene == GREETINGS);
         CHECK(p.level < 50);
     }
 
